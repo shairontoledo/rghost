@@ -1,0 +1,55 @@
+/col_padding 0.1 cm def
+
+/st_center{  exch strlen 3 -1 roll sub -2 div dup 0 rmoveto exch show 0 rmoveto  } def
+/st_right{ exch strlen 3 -1 roll X add sub neg col_padding sub current_row moveto show col_padding 0 rmoveto  } def
+/st_left{ X add exch X col_padding add current_row moveto show  current_row moveto   }def
+
+/col 0 def
+/current_table_row 0 def %current row table
+/nextcol{ /col inc } def
+
+/headings? true def
+
+/header_proc {
+	new_page? new_vp? or{
+		%before_row_create callback_row
+		before_header_create
+		header_titles {
+			before_column_header callback_col
+			headings? {
+				table_header col get aload pop cvx  exec nextcol
+				
+			}{ pop } ifelse
+			after_column_header callback_col
+		} forall
+		after_header_create
+		after_row
+		/new_page? false def
+		/new_vp? false def
+	 }if
+} def
+
+/after_row{
+	/current_table_row inc
+	/col 0 def
+	next_row
+	new_current_row_point
+	limit_left current_row moveto
+}def
+
+/table_proc {
+	{limit_left current_row moveto
+	  header_proc
+	 	before_row callback_row
+	 	row_odd_or_even callback_row
+		{
+			before_column callback_col
+			table_params col get aload pop cvx exec nextcol
+			after_column callback_col
+		} forall
+    after_row
+
+	} forall
+	after_table_create
+
+}bind def

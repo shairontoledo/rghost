@@ -1,0 +1,8 @@
+2 dict dup /PageSize pagesize put dup /ImagingBBox null put setpagedevice
+/limit_top { pagesize 1 get margin /top get sub } def
+/limit_right { pagesize 0 get margin /right get sub } def
+/limit_bottom { margin /bottom get } def
+/limit_left { margin /left get } def
+/area_x  pagesize 0 get margin /right get sub margin /left get sub def
+/area_y  pagesize 1 get margin /top get sub margin /bottom get sub def
+1 unit 1 unit moveto

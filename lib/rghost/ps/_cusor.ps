@@ -1,0 +1,46 @@
+/current_page 1 def
+/X{  currentpoint pop } def
+/Y{ currentpoint exch pop} def
+/nrdp{ next_row  default_point } def
+/next_page{
+	after_page_create callback
+	/row 1 def
+	%(Page: ) print	current_page 8 string cvs print (\n) print
+ 
+	showpage
+	/new_page? true def
+  
+	/current_page inc
+	/current_row limit_top row row_height mul sub def
+	%before_page_create callback
+	%odd_or_even callback
+	current_page count_pages eq { last_page } if
+	new_current_row_point
+  default_point 
+	before_page_create callback
+	odd_or_even callback
+  
+} def
+/default_point { limit_left  current_row  moveto} def
+/new_current_row_point{ 	/current_row limit_top row row_height row_padding add mul sub def }def
+
+/next_row{
+  row rows_per_page lt current_row limit_bottom ge and {	/row inc
+			new_current_row_point
+	}{ next_page }ifelse
+} def
+
+/jump_rows{
+	%dup 1 le { {	next_row 	}repeat} if
+ {  next_row  }repeat 
+} def
+/jump_rows{
+  %dup 1 le { { next_row  }repeat} if
+ dup 0 ge {{  next_row  }repeat
+ }{  neg { /row dec  } repeat new_current_row_point } ifelse
+} def
+
+/goto_row{
+  /row exch def
+		new_current_row_point
+} def 

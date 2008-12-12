@@ -1,0 +1,106 @@
+/p{ pstack} def
+/current_page 1 def
+/current_vp 1 def
+
+%vp = virtual_page
+/new_vp? false def
+/has_vp? false def 
+/start_vp{
+  /has_vp? true def 
+  /current_vp 1 def
+  %/vp_params [ [20 cm 1 cm ] [10 cm 1 cm ] [7 cm  1 cm ] ] def 
+  /vp_count vp_params length def 
+  /source_limit_left limit_left def
+  /source_limit_right limit_right def
+}def
+
+/first_vp_page{
+  vp_params 0 get aload pop %pop
+  limit_left add
+  /limit_right exch  def  
+  /new_vp? true def
+  default_point
+  %before_virtual_page_create vp_callback
+} def
+/vp_proc{
+
+has_vp? { start_vp  before_virtual_page_create vp_callback first_vp_page } if 
+
+} def
+/new_page_defaults{
+  /current_page inc
+  /current_row limit_top row row_height mul sub def
+  current_page count_pages eq { last_page } if
+  new_current_row_point
+  default_point 
+  before_page_create callback
+  odd_or_even callback
+  before_virtual_page_create vp_callback
+} def
+
+/X{  currentpoint pop } def
+/Y{ currentpoint exch pop} def
+/nrdp{ next_row  default_point } def
+/next_page{
+  has_vp?{ (ok has virtual page\n) print 
+    /row 1 def
+    current_vp vp_count lt {
+      default_point
+      after_virtual_page_create vp_callback
+    
+      vp_params current_vp get 
+      /current_vp inc 
+      aload pop limit_right exch add /limit_left exch def
+      limit_left add  /limit_right exch def
+      /current_row limit_top row row_height mul sub def
+      new_current_row_point
+      default_point 
+      before_virtual_page_create vp_callback
+      /new_vp? true def
+    }{
+      after_page_create callback
+      /current_vp 1 def
+      /limit_left source_limit_left def
+      showpage 
+      new_page_defaults
+      has_vp? {first_vp_page} if
+    } ifelse
+    
+    new_current_row_point
+    default_point 
+  }{
+    /row 1 def
+    /new_page? true def
+      /current_vp 1 def
+      after_page_create callback
+      showpage
+      /new_page? true def
+      new_page_defaults
+      has_vp? {first_vp_page} if
+  }ifelse
+} def
+
+
+/default_point { limit_left  current_row  moveto} def
+/new_current_row_point{ 	/current_row limit_top row row_height row_padding add mul sub def }def
+
+/next_row{
+  row rows_per_page lt current_row limit_bottom ge and {	/row inc
+			new_current_row_point
+	}{ next_page }ifelse
+} def
+
+/jump_rows{
+	%dup 1 le { {	next_row 	}repeat} if
+ {  next_row  }repeat 
+} def
+/jump_rows{
+  %dup 1 le { { next_row  }repeat} if
+ dup 0 ge {{  next_row  }repeat
+ }{  neg { /row dec  } repeat new_current_row_point } ifelse
+} def
+
+/goto_row{
+  /row exch def
+		new_current_row_point
+} def 

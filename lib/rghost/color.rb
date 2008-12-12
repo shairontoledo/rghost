@@ -1,0 +1,150 @@
+require "ps_object"
+require "constants"
+require "ruby_to_ps" #array_to_stack
+
+#Creates color for postscript components
+class RGhost::Color < RGhost::PsObject
+  
+  include RGhost::RubyToPs
+  #The method create is a color factory depends when parameter is used. The parameter variate between 0 and 1, if value greatet that 1 will be divided by 100.0 .
+  #===Examples
+  #====Creating RGB color
+  #String HTML color converter
+  # Color.create '#FFAA33'
+  #As Symbol will be find in RGhost::Constants::Colors::RGB
+  # Color.create :red         
+  #As Array with 3 elements 
+  # Color.create [0.5, 0.3, 0.5]
+  #Hash with 3 pair of key/value. Valids keys :red, :green and :blue
+  # Color.create :red => 0.5, :green => 0.3, :blue => 0.5 
+  #Hash with 3 pair of key/value. Valids keys :r, :g and :b
+  # Color.create :r => 0.5, :g => 0.3, :b => 0.5
+  #====Creating CMYK color
+  #Hash with 4 pair of key/value. Valids keys :cyan, :magenta, :yellow and :black
+  #  Color.create :cyan=> 1 ,:magenta => 0.3, :yellow => 0, :black => 0 
+  #Hash with 4 pair of key/value. Valids keys :c, :m, :y and :b
+  #  Color.create :c=> 1 ,:m => 0.3, :y => 0, :b => 0
+  #====Creating Gray color
+  #A single Numeric
+  # Color.create 0.5
+  #50 percent of black will be divided by 100.0
+  # Color.create 50
+  def self.create(color="FFAA99")
+    
+    return case color
+    when String: RGhost::RGB.new(color)
+    when Symbol:
+        c=RGhost::Constants::Colors::RGB[color]
+      raise ArgumentError.new("#{color}##{color.class}") unless c 
+      self.create c
+         
+    when Array, Hash:
+        if color.size == 3
+        RGhost::RGB.new(color)
+      elsif color.size == 4 
+        RGhost::CMYK.new(color)
+      else
+        raise ArgumentError.new("#{color}##{color.class}")
+      end
+    when Numeric: RGhost::Gray.new(color)
+    else
+      raise ArgumentError.new("#{color}##{color.class}")
+    end
+  
+  end
+
+  
+end
+
+#Creates RGB color
+class RGhost::RGB < RGhost::Color
+  attr_accessor :red, :green, :blue
+  CONSTANTS=RGhost::Constants::Colors::RGB
+  DEFAULT_RGB={:red => 0, :green => 0, :blue => 0}
+  #String HTML color converter
+  # Color.create '#FFAA33'
+  #As Symbol will be find in RGhost::Constants::Colors::RGB
+  # Color.create :red         
+  #As Array with 3 elements 
+  # Color.create [0.5, 0.3, 0.5]
+  #Hash with 3 pair of key/value. Valids keys :red, :green and :blue
+  # Color.create :red => 0.5, :green => 0.3, :blue => 0.5 
+  #Hash with 3 pair of key/value. Valids keys :r, :g and :b
+  # Color.create :r => 0.5, :g => 0.3, :b => 0.5
+  def initialize(color_or_red=nil,green=nil,blue=nil)
+    @color=color_or_red
+    @color=[color_or_red.to_f,green.to_f,blue.to_f] if color_or_red.is_a? Numeric
+    @color=DEFAULT_RGB.merge(color_or_red) if color_or_red.is_a? Hash
+    
+  end
+  
+  def ps
+		value=color_params
+    
+    array_to_stack(value.map{|n| n > 1 ? n/100.0: n})+"setrgbcolor"
+  end
+	def stack_format
+		color_params
+	end
+	def color_params
+    case @color
+    when Hash:  [@color[:red] || @color[:r],@color[:green] || @color[:g],@color[:blue] || @color[:b]]
+    when Array:  @color
+    when String: hex_to_rgb(@color) 
+    when NilClass: [0,0,1]
+    end
+		
+		
+  end
+	
+  private
+  
+  def hex_to_rgb(color="#FFFFFF")
+  
+    color.gsub(/#/,'').scan(/[\dA-F]{2}/).map{|h| h.hex / 255.0}
+  end
+
+end
+
+#Creates CMYK color space
+class RGhost::CMYK < RGhost::Color
+  attr_accessor :cyan ,:magenta, :yellow, :black
+  CONSTANTS=RGhost::Constants::Colors::CMYK
+  
+  #Hash with 4 pair of key/value. Valids keys :cyan, :magenta, :yellow and :black
+  #  Color.create :cyan=> 1 ,:magenta => 0.3, :yellow => 0, :black => 0 
+  #Hash with 4 pair of key/value. Valids keys :c, :m, :y and :b
+  #  Color.create :c=> 1 ,:m => 0.3, :y => 0, :b => 0
+  def initialize(color={:cyan=> 1 ,:magenta => 0, :yellow => 0, :black => 0})
+    @color=color
+  end
+  
+  def ps
+
+    value=case @color
+    when Hash:  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+    when Array:  @color
+    end
+    array_to_stack(value.map{|n| n > 1 ? n/100.0: n})+"setcmykcolor"
+
+  end
+
+end
+#Creates Gray color
+class RGhost::Gray < RGhost::Color
+  attr_accessor :gray
+  
+  #A single Numeric
+  # Color.create 0.5
+  #50 percent of black will be divided by 100.0
+  # Color.create 50
+  def initialize(gray=0.8)
+    @gray=gray
+  end
+  
+  def ps #:nodoc:
+    @gray = @gray/100.0 if @gray > 1
+    "#{@gray} setgray"
+  end
+
+end

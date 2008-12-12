@@ -1,0 +1,175 @@
+%static callbacks
+/before_document_create {} bind def
+/first_page  {} bind def
+/last_page  {} bind def
+/after_document_create {} bind def
+
+%%dynamic callbacks
+/before_page_create 3 dict def
+	before_page_create begin 
+ 		/proc {} bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end
+/after_page_create 3 dict def
+	after_page_create begin
+ 		/proc {} bind def
+ 		/except [ ] def
+ 		/only [ ] def
+end
+/odd_pages 3 dict def
+	odd_pages begin
+ 		/proc { } bind def
+ 		/except [] def
+ 		/only [] def
+end
+/even_pages 3 dict def
+	even_pages begin
+ 		/proc {} bind def
+ 		/except [ ] def
+ 		/only [ ] def
+end
+
+
+%execute callbacks
+/callback{
+	dup dup
+ /except get length 0 ne { /except get current_page include? not}{
+     dup /only get length 0 ne { /only get current_page include?}{
+				pop true
+     }ifelse
+ }ifelse
+ { /proc get exec  }{
+   pop 
+ }ifelse
+} bind def
+%execute virtual page callbacks
+/vp_callback{
+	dup dup
+ /except get length 0 ne { /except get current_vp include? not}{
+     dup /only get length 0 ne { /only get current_vp include?}{
+				pop true
+     }ifelse
+ }ifelse
+ { /proc get exec  }{
+   pop 
+ }ifelse
+} bind def
+
+/odd? { 2 mod 0 eq {true}{false} ifelse } bind def
+/odd_or_even { current_page odd? {odd_pages}{even_pages}ifelse }def
+
+%TABLE
+/before_table_create {} def
+/after_table_create {} def
+
+%TABLE ROW
+/row_odd_or_even {
+	current_table_row odd? {odd_row}{even_row} ifelse
+}def
+/before_row 3 dict def before_row begin
+ 		/proc { } bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end
+/after_row 3 dict def after_row begin
+ 		/proc { } bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end
+
+/odd_row 3 dict def odd_row begin
+ 		/proc {  } bind def
+ 		/except [  ] def
+ 		/only [   ] def
+end
+
+/even_row 3 dict def even_row begin
+ 		/proc { } bind def
+ 		/except [ ] def
+ 		/only [ ] def
+end
+
+%column
+/col_odd_or_even {
+	col odd? {odd_column}{even_column} ifelse
+}def
+
+/before_column 3 dict def before_column begin
+ 		/proc {  } bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end
+
+/after_column 3 dict def 	after_column begin
+ 		/proc { } bind def
+ 		/except [  ] def
+ 		/only [ ] def
+end
+
+/odd_column 3 dict def 	odd_column begin
+ 		/proc {   } bind def
+ 		/except [  ] def
+ 		/only [ ] def
+end
+
+/even_column 3 dict def even_column begin
+ 		/proc {  } bind def
+ 		/except [ ] def
+ 		/only [ ] def
+end
+
+%%HEADER----------------------
+/before_header_create {} def
+/after_header_create {} def
+
+/before_column_header 3 dict def before_column_header begin
+ 		/proc { } bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end
+
+/after_column_header 3 dict def 	after_column_header begin
+ 		/proc {  } bind def
+ 		/except [  ] def
+ 		/only [ ] def
+end
+
+%%ROW CALLBACKS
+/callback_row{
+dup dup
+ /except get length 0 ne { /except get current_table_row include? not}{
+     dup /only get length 0 ne { /only get current_table_row include?}{
+				pop true
+     }ifelse
+ }ifelse
+ { /proc get exec  }{
+   pop 
+ }ifelse
+} bind def
+
+%%COLUMN CALLBACKS
+/callback_col{
+dup dup
+ /except get length 0 ne { /except get col include? not}{
+     dup /only get length 0 ne { /only get col include?}{
+				pop true
+     }ifelse
+ }ifelse
+ { /proc get exec  }{
+   pop 
+ }ifelse
+} bind def
+
+/before_virtual_page_create 3 dict def
+	before_virtual_page_create begin 
+ 		/proc {} bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end
+/after_virtual_page_create 3 dict def
+	after_virtual_page_create begin 
+ 		/proc {} bind def
+ 		/except [ ] def
+ 		/only [  ] def
+end

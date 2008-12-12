@@ -1,0 +1,5 @@
+/background_row {
+	gsave dup type to_s (arraytype) eq { exec} if
+		current_row row_padding sub  exch row_height row_padding add 0.5 sub rectfill
+   grestore
+}def

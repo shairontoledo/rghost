@@ -1,0 +1,21 @@
+/show_center{ dup stringwidth pop 2 div neg 0 rmoveto show } def
+/show_right{ dup stringwidth pop neg 0 rmoveto show } def
+/show_left{ show }def
+
+%%TODO: page_(center & left & right)
+
+/page_center{
+area_x 2 div margin /left get add current_row moveto
+dup stringwidth pop 2 div neg 0 rmoveto show
+} def
+
+/page_right{
+area_x margin /left get add current_row moveto
+dup stringwidth pop neg 0 rmoveto show
+} def
+
+/page_left{
+limit_left current_row moveto
+%dup stringwidth pop neg 0 rmoveto
+ show
+} def

@@ -1,0 +1,63 @@
+/:rh{ row_height } def
+/append{
+  dup cvx exec  3 -1 roll _concat ( ) _concat def
+} def
+
+/_concat { exch dup length    
+  2 index length add string    
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} def  
+
+
+/:text{
+  /:space ( ) def
+  /:nw{ 	search false eq { /:last true def  } if strlen :this_or_next }def 
+  /:last false def
+  /:this_or_next{  X add limit_right le { show }{ nrdp show} ifelse :space show  } def
+} def
+
+
+/:text_area {
+	/:nbw{ currentpoint :rh sub exch pop 0 exch moveto } def
+	/:space ( ) def
+	/:this_or_next{  X add :bw le { show }{ :nbw show } ifelse :space show } def
+	/:nw{ 	search false eq { /:last true def  } if strlen :this_or_next }def 
+	/:last false def
+} def
+
+/:text_proc{:space { :nw :last {exit} if  } loop   /:last false def } def  
+
+/:last false def
+
+/:nbw{ 0 Y :rh sub moveto } def 
+
+/text_disp { 
+	text_align /center eq {	
+		:bw 2 div Y moveto
+		strlen 2 div neg 0 rmoveto show
+    %show
+	}{
+		:bw Y moveto
+		 strlen neg 0 rmoveto show
+    
+	}ifelse
+ } def
+/:text_proc_cr { 
+	/curstr () def
+	{ 
+		( ) search false eq /:last exch def  
+		:last false eq { 
+		  exch pop curstr stringwidth pop ( ) stringwidth pop sub  :bw le { 
+			  /curstr append
+			}{
+			  curstr text_disp ( ) _concat /curstr exch def
+        :nbw
+			} ifelse
+		}{
+			/curstr append curstr text_disp :nbw  
+      exit
+		} ifelse
+	} loop
+	/:last false def
+}def

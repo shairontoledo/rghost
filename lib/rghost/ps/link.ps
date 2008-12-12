@@ -1,0 +1,22 @@
+/:fh{ currentfont /FontMatrix get 3 get 1000 mul } def
+/:link_str () def
+/:link_uri () def
+/:link_rect 4 array def
+
+/:link_make{
+ :link_rect 0 X put
+ :link_rect 1 Y put
+ :link_rect 2 :link_str stringwidth pop X add put
+ :link_rect 3 :fh  Y add put
+:link_rect 
+
+[ /Rect :link_rect
+  /Action /Launch
+  /Border [0 0 0]
+  /Color [0 0 0]
+  /URI :link_uri
+  /Subtype /Link
+  /ANN pdfmark
+ :link_str show
+
+} def

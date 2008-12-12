@@ -1,0 +1,38 @@
+/fontsize 8 def
+/encoding_font { findfont dup length dict begin  { 1 index /FID ne  { def } { pop pop } ifelse } bind forall /Encoding default_encoding def currentdict end } def
+
+/Helvetica encoding_font
+/Helvetica-encoding exch definefont pop
+
+/Helvetica-Bold encoding_font
+/Helvetica-Bold-encoding exch definefont pop
+
+/Helvetica-Oblique encoding_font
+/Helvetica-Oblique-encoding exch definefont pop
+
+/Helvetica-BoldOblique encoding_font
+/Helvetica-BoldOblique-encoding exch definefont pop
+
+/font_normal{
+	/Helvetica-encoding findfont fontsize scalefont setfont
+  0 setgray
+} bind def
+
+/font_bold{
+	/Helvetica-Bold-encoding findfont fontsize scalefont setfont
+  0 setgray
+} bind def
+
+/font_italic{
+	/Helvetica-Oblique-encoding findfont fontsize scalefont setfont
+  0 setgray
+} bind def
+
+/font_bold_italic{
+	/Helvetica-BoldOblique-encoding findfont fontsize scalefont setfont
+  0 setgray
+} bind def
+/b{font_bold } def
+/i{font_italic } def
+/default_font{ font_normal} def
+/_default_font{ font_normal} def

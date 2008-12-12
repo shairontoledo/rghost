@@ -1,0 +1,11 @@
+/textarea_defaults {
+  /space ( ) def
+  /spacecount { 0 exch ( ) { search { pop 3 -1 roll 1 add 3 1 roll } { pop exit } ifelse } loop } def
+  /ssp { space search pop } def
+  /dsp { dup stringwidth pop } def
+  /cpp { currentpoint pop } def
+  /S { dup spacecount {ssp dsp cpp add rm gt { L s s }{ s s } ifelse } repeat pop } def
+  /n { show newline } def /s { show } def /L {  newline} def
+  /centre { dup stringwidth pop 2 div rm 2 div exch sub lm add tm moveto } def
+  /c{ centre n} def
+} def

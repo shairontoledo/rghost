@@ -1,0 +1,16 @@
+/rcorners{ 
+gsave
+	:x :y :r add moveto 	
+  :outside
+	/:l1{ :x :y :h add :x :s add :y :h add :r arcto   } def
+	/:l2{ :x :w add :y :h add :x :w add :y :h add :s sub :r arcto   } def
+	/:l3{ :x :w add :y :x :w add :s sub :y :r arcto  } def
+	/:l4{ :x :y :x :y :s add :r arcto } def
+	:l1 :l2 :l3 :l4 clear
+	closepath
+	%gsave
+    :inside
+	%grestore  
+	stroke
+grestore
+} def

@@ -1,0 +1,12 @@
+/vertical_line{ exch  current_row moveto 0 exch neg rlineto stroke  } def
+/vlr {
+	gsave
+		0 row_height rlineto
+    stroke
+	grestore
+} def
+/vlrf { 
+    X Y row_padding sub moveto
+		0 row_height row_padding add rlineto
+    stroke
+} def

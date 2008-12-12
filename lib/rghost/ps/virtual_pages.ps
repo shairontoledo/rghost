@@ -1,0 +1,55 @@
+
+%vp = virtual_page
+/current_vp 1 def
+/has_vp? false def 
+/col_size 18 cm def
+/vp_params [ [1 10] [1 20] [1 30]] def 
+/vp_count vp_params length def 
+/source_limit_left limit_left def
+/source_limit_right limit_right def
+/limit_right limit_left col_size add def
+/col_margin 2 cm def
+
+/next_page{
+  has_vp?{ (ok has virtual page, stopping) print 
+    
+    /row 1 def
+    /new_page? true def
+        
+      current_vp 2 eq {
+        /current_vp 0 def 
+        showpage 
+        
+       /limit_left source_limit_left def 
+      /limit_right limit_left col_size add def
+
+      }{
+        /limit_left col_size col_margin add def 
+        /limit_right limit_left col_size add def
+        } ifelse 
+      /current_vp inc
+      /current_row limit_top row row_height mul sub def
+      
+      new_current_row_point
+      default_point 
+      
+
+  }{
+      after_page_create callback
+      %(Page: ) print	current_page 8 string cvs print (\n) print
+
+      showpage
+      /new_page? true def
+
+      /current_page inc
+      /current_row limit_top row row_height mul sub def
+      %before_page_create callback
+      %odd_or_even callback
+      current_page count_pages eq { last_page } if
+      new_current_row_point
+      default_point 
+      before_page_create callback
+      odd_or_even callback
+  }ifelse
+
+} def

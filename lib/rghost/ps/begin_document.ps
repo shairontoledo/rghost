@@ -1,0 +1,8 @@
+/current_row limit_top row row_height mul sub def
+new_current_row_point
+%default_point
+before_document_create
+before_page_create callback
+first_page
+even_pages callback
+default_font

@@ -1,0 +1,25 @@
+/inc{ dup cvx exec 1 add def} def
+/dec{ dup cvx exec 1 sub def} def
+/to_s{ 80 string cvs } def
+/is_array?{ count 0 ne {dup}{false} ifelse type to_s (arraytype)  }def
+/new_page? true def
+/strlen { dup stringwidth pop } def
+/current_page 1 def
+/puts { to_s print (\n) print } def
+/row 1 def
+%if include in array
+/include? { /_atual 1 def exch dup length  /_s exch def exch /_v exch def
+ 	{ _v eq {true exit}{ _atual _s eq {	false exit }{ /_atual inc	} ifelse 	} ifelse }forall
+ 	_s 0 eq {false} if
+ }  def
+
+/beging{
+currentrgbcolor
+currentfont
+
+}bind def
+
+/endg{
+setfont
+setrgbcolor
+}bind def

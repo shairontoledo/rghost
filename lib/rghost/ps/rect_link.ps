@@ -1,0 +1,17 @@
+/:rect_x 0 def 
+/:rect_y 0 def 
+/:rect_w 0 def 
+/:rect_h 0 def 
+/:rect_uri (http://rghost.rubyforge.org) def 
+
+/:rect_link{
+:rect_x :rect_y moveto
+[ /Rect [:rect_x :rect_y :rect_w X add :rect_h Y add] 
+  /Action /Launch
+  /Border [0 0 1]
+  /Color :rect_color
+  /URI :rect_uri
+  /Subtype /Link
+  /ANN pdfmark
+ 
+} def

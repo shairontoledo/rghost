@@ -1,0 +1,237 @@
+%!  
+(type.ps) runlibfile
+  (unit.ps) runlibfile
+  (IsoLatin.enc) runlibfile
+  /default_encoding IsoLatin def  
+<< /Duplex false /Tumble false >> setpagedevice
+/pagesize [595 842]  def
+/margin 3 dict def margin begin /top 1 cm  def /right 2 cm  def /bottom 1 cm  def /left	2 cm  def end
+(paper.ps) runlibfile
+    /rows_per_page 80 def  /count_pages 10 def  /row_height 0.8 cm  def  /row_padding 0.1 cm  def    (basic.ps) runlibfile
+  (cursor.ps) runlibfile
+  (rectangle.ps) runlibfile
+  (font.ps) runlibfile
+  (text.ps) runlibfile
+  (horizontal_line.ps) runlibfile
+  (vertical_line.ps) runlibfile
+  (callbacks.ps) runlibfile
+  (show.ps) runlibfile
+  (eps.ps) runlibfile
+  (jpeg.ps) runlibfile
+  (gif.ps) runlibfile
+  (begin_document.ps) runlibfile
+  (datagrid.ps) runlibfile
+    limit_left  current_row  moveto    
+/title{
+ /Helvetica-encoding findfont 20 scalefont setfont  0 setgray 
+} bind def 
+
+/h1{
+ /Helvetica-encoding findfont 14 scalefont setfont  0 setgray 
+} bind def 
+
+/b{
+ /Helvetica-Bold-encoding findfont 10 scalefont setfont  0 setgray 
+} bind def 
+
+/span{
+ /Helvetica-encoding findfont 10 scalefont setfont  0 setgray 
+} bind def 
+
+/h2{
+ /Helvetica-encoding findfont 13 scalefont setfont  0 setgray 
+} bind def 
+
+/i{
+ /Helvetica-Oblique-encoding findfont 10 scalefont setfont  0 setgray 
+} bind def 
+
+/h3{
+ /Helvetica-encoding findfont 12 scalefont setfont  0.5 setgray 
+} bind def 
+
+/bi{
+ /Helvetica-BoldOblique-encoding findfont 10 scalefont setfont  0 setgray 
+} bind def 
+
+/h4{
+ /Helvetica-encoding findfont 11 scalefont setfont  1 0 0 setrgbcolor
+} bind def 
+
+/big{
+ /Helvetica-encoding findfont 24 scalefont setfont  0 setgray 
+} bind def 
+
+/h5{
+ /Helvetica-encoding findfont 10 scalefont setfont  0 setgray 
+} bind def 
+
+/pre{
+ /Courier-encoding findfont 10 scalefont setfont  0 setgray 
+} bind def 
+
+/small{
+ /Helvetica-encoding findfont 7 scalefont setfont  0 setgray 
+} bind def 
+ (begin_document.ps) runlibfile
+  limit_left  current_row  moveto  
+  
+%gs -sDEVICE=x11 -I/local/projects/ruby/rghost_rf/lib/lib/rghost/ps developer.ps
+
+/p{ pstack} def
+(rghost - Develop Environment\n) print
+(by Shairon Toledo\n) print
+(Postscript Version ) print version print (\n) print
+%%rounded corners
+/rcorners_params{
+	/:x 3 cm def /:y 12 cm def
+	/:w 10 cm def /:h 8 cm def
+	/:r 10 def
+	/:s 1 def
+	/:inside{
+		0.9 setgray 
+		%0.2 0.4 0 setrgbcolor
+	 	fill   
+	 } def
+	/:outside{
+		 0.5 setgray
+	 }def
+	} def
+/rcorners{ 
+gsave
+	:x :y :r add moveto 	
+  :outside
+	/:l1{ :x :y :h add :x :s add :y :h add :r arcto   } def
+	/:l2{ :x :w add :y :h add :x :w add :y :h add :s sub :r arcto   } def
+	/:l3{ :x :w add :y :x :w add :s sub :y :r arcto  } def
+	/:l4{ :x :y :x :y :s add :r arcto } def
+	:l1 :l2 :l3 :l4 clear
+	closepath
+	gsave
+	 :inside
+	grestore
+	 stroke
+grestore
+} def
+
+%rcorners_params rcorners
+
+%charmap
+/charmap{
+	/c 1 string def
+	/n 3 string def
+	default_font span
+	/Times-Roman findfont 12 scalefont setfont
+
+	1 1 255{
+		dup dup dup
+		n  cvs show (  =  ) show
+		c 0 3 -1 roll put c show
+		5 mod 0 eq{ nrdp   }{  5 mod 4 cm mul Y moveto } ifelse
+	} for
+} def
+
+
+%charmap
+/font_outline{
+big
+1 0 0 setrgbcolor
+(Hello) true charpath gsave 0.5 setgray fill grestore stroke
+} def
+/clipping{
+		/Times-BoldItalic findfont 48 scalefont setfont
+		/rays{
+			BeginEPSF
+				(rghost_default_template.eps) run
+			EndEPSF
+		} def 
+		300 400 translate
+		.25 setlinewidth
+		newpath
+		0 0 moveto
+		(StarLines) true charpath clip
+		newpath
+		0 -5 translate
+		rays
+}def
+%clipping
+
+%linecap
+%setlinecap
+%setlinejoin
+%setmiterlimit
+%[ ] 0 setdash % Turn dashing off: solid lines
+%[3] 0 setdash % 3-unit on, 3-unit off, 
+
+%nrdp
+%[0 1 9 9] 1 setdash
+%limit_left area_x horizontal_line_top
+%stroke showpage
+
+
+
+/:test (If proc executes the exit operator, rasdf a adad af its own on the stack, but XX ## If proc executes the exit operator, repeat terminates prematurely. repeat leaves no results of its own on the stack, but What if the printer isn't on the default queue? The destination for the printed output can be specified on the command line. To output to the file c:\out.prn, add -sOutputFile="c:/out.prn" somewhere before the name of the PostScript file. To output to a Windows 95 queue named HP DeskJet Portable Printer, use -sOutputFile="\\spool\HP DeskJet Portable Printer". Get the spelling exact or it won't work. For Windows 3.1 or Win32s, to output to port LPT2:"
+  ) def
+
+default_font
+%gsave
+	%5 cm 17 cm translate
+
+	/:bw 14 cm def  %box width
+	/:rp 0.1 cm def  %row padding
+	/:rh 0.5 cm def  %row height
+	/:text_area {
+		%next box row
+		/:nbw{ currentpoint :rh :rp add sub exch pop 0 exch moveto } def
+		/:space ( ) def
+		/:this_or_next{  X add :bw le { show :space show }{ :nbw show } ifelse } def
+		/:nw{ 	search false eq { /:last true def  } if dup  stringwidth pop :this_or_next }def 
+		/:last false def
+
+  } def
+		/:text_proc{:space { :nw :last {exit} if  } loop   /:last false def } def  
+
+ /concat 
+   { exch dup length    
+     2 index length add string    
+     dup dup 4 2 roll copy length
+     4 -1 roll putintervaler, </pre>
+but it is considered a development release. Several virtual machines are
+   } bind def  
+
+/Helvetica findfont 16 scalefont setfont
+
+/str (As of December 2007, the latest stable version is 1.8.6. Ruby 1.9.0 was released in December, but it is considered a development release. Several virtual machines are being developed for Ruby These include JRuby, a port of Ruby to the Java platform, IronRuby an implementation for the .NET Framework produced by Microsoft and Rubinius, an interpreter modeled after self-hosting Smalltalk virtual machines. The main developers have thrown their weight behind the virtual machine provided by the YARV project, which was merged into the Ruby source) def
+
+/fstr () def
+/append{
+	%curstr exch ( ) concat concat /curstr exch def
+  dup cvx exec  3 -1 roll concat ( ) concat def
+} def
+
+/txt_nrdp{
+   (novo----------) puts 
+   currentpoint puts puts
+  %currentpoint exch pop :rh sub 0 exch moveto
+762.786
+282.908
+	  nrdp
+} def 
+
+
+%gsave 
+5 cm 0 translate
+/:bw 10 cm def
+/text_align { /cdenter } def
+
+str text_area_cr
+%grestore
+%h3
+%(*tree on 31 December 2006, and released as part of Ruby1.9) text_area_cr
+%h4
+%(*The type of the result is the same as the type of num1, unless num1 is the most negative integer, in which case the result is a real. ) 
+
+%text_area_cr
+
+showpage
+

@@ -1,0 +1,42 @@
+/BeginEPSF
+{
+	/EPSFsave save def
+	count /OpStackSize exch def
+	/DictStackSize countdictstack def
+	% turn off showpage
+	/showpage {} def
+	% set up default graphics state
+	0 setgray 0 setlinecap
+	1 setlinewidth 0 setlinejoin
+	10 setmiterlimit [] 0 setdash newpath
+	/languagelevel where
+	{
+		pop languagelevel 1 ne
+    	{
+			false setstrokeadjust false setoverprint
+		} if
+	} if
+} bind def
+/EndEPSF
+{
+	count OpStackSize sub
+	dup 0 lt {neg {pop} repeat} {pop} ifelse
+	countdictstack DictStackSize sub
+	dup 0 lt {neg {end} repeat} {pop} ifelse
+	EPSFsave restore
+} bind def
+/EPSFBox
+{
+	4 dict begin
+	/ury exch def
+	/urx exch def
+	/lly exch def
+	/llx exch def
+	llx lly moveto
+	urx lly lineto
+	urx ury lineto
+	llx ury lineto
+	closepath
+	end
+} def
+/pagesave save def 
