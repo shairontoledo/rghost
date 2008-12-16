@@ -480,7 +480,7 @@ class RGhost::Document < RGhost::PsFacade
   #Creates Grid::Rails inside of the document. Facade to RGhost::Grid::Rails
   def rails_grid(default_columns_options={})
     
-    grid=Grid::Rails.new(default_columns_options)
+    grid=RGhost::Grid::Rails.new(default_columns_options)
     yield grid
     grid.style(default_columns_options[:style]) if default_columns_options[:style]
     grid.data(default_columns_options[:data]) if default_columns_options[:data]
