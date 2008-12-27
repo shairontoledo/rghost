@@ -1,1 +1,1 @@
-= 'See the wiki':http://github.com/shairontoledo/rghost/wikis
+'See the wiki':http://github.com/shairontoledo/rghost/wikis
