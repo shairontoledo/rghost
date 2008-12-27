@@ -1,1 +1,1 @@
-link:'See the wiki':http://github.com/shairontoledo/rghost/wikis
+#link:http://github.com/shairontoledo/rghost/wikis
