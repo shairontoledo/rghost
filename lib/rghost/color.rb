@@ -24,6 +24,9 @@ class RGhost::Color < RGhost::PsObject
   #  Color.create :cyan=> 1 ,:magenta => 0.3, :yellow => 0, :black => 0 
   #Hash with 4 pair of key/value. Valids keys :c, :m, :y and :b
   #  Color.create :c=> 1 ,:m => 0.3, :y => 0, :b => 0
+  #====Creating CMYK Spot color
+  #Hash with 5 pair of key/value. Valids keys :cyan, :magenta, :yellow, :black, and :name
+  #  Color.create :cyan=> 0, :magenta => 100, :yellow => 63, :black => 12, :name => 'Pantone 200 C'
   #====Creating Gray color
   #A single Numeric
   # Color.create 0.5
@@ -43,6 +46,8 @@ class RGhost::Color < RGhost::PsObject
         RGhost::RGB.new(color)
       elsif color.size == 4 
         RGhost::CMYK.new(color)
+      elsif color.size == 5
+        RGhost::CMYKSpot.new(color)
       else
         raise ArgumentError.new("#{color}##{color.class}")
       end
@@ -120,16 +125,36 @@ class RGhost::CMYK < RGhost::Color
   end
   
   def ps
-
     value=case @color
-    when Hash:  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
-    when Array:  @color
+      when Hash:  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+      when Array:  @color
     end
+    
     array_to_stack(value.map{|n| n > 1 ? n/100.0: n})+"setcmykcolor"
-
   end
 
 end
+
+#Creates CMYK Spot color space
+class RGhost::CMYKSpot < RGhost::Color
+  attr_accessor :cyan ,:magenta, :yellow, :black, :name
+
+  def initialize(color={:name => 'spot', :cyan=> 1 ,:magenta => 0, :yellow => 0, :black => 0})
+    @name = color[:name]
+    color.delete(:name)
+    @color = color
+  end
+  
+  def ps
+    value=case @color
+      when Hash:  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+      when Array:  @color
+    end
+    
+    array_to_stack(value.map{|n| n > 1 ? n/100.0: n}) + "(#{@name.to_s}) findcmykcustomcolor \n/#{@name.to_s.gsub(' ', '_')} exch def\n\n#{@name.to_s.gsub(' ', '_')} 1 setcustomcolor"
+  end
+end
+
 #Creates Gray color
 class RGhost::Gray < RGhost::Color
   attr_accessor :gray
