@@ -18,10 +18,6 @@ spec = Gem::Specification.new do |s|
     item.include?(".svn") || item.include?(".tar") || item.include?("lib/rghost/doc/") || item.include?("test_") || item.to_s =~  /^doc$/
   end
   s.require_path      = "lib"
-  #s.autorequire       = "rghost"
-  #s.has_rdoc          = true
-  #s.extra_rdoc_files = ["README"]
-  #s.add_dependency("BlueCloth", ">= 0.0.4")
 end
 if $0 == __FILE__
       Gem::manage_gems
