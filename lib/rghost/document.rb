@@ -489,7 +489,7 @@ class RGhost::Document < RGhost::PsFacade
   end
   #Creates Grid::CSV inside of the document. Facade to RGhost::Grid::CSV
   def csv_grid(default_columns_options={})
-    grid=Grid::CSV.new(default_columns_options) 
+    grid=RGhost::Grid::CSV.new(default_columns_options) 
     yield grid
     grid.style(default_columns_options[:style]) if default_columns_options[:style]
     grid.data(default_columns_options[:data]) if default_columns_options[:data]
@@ -497,7 +497,7 @@ class RGhost::Document < RGhost::PsFacade
   end
   #Creates Grid::Matrix inside of the document. Facade to RGhost::Grid::Matrix
   def matrix_grid(default_columns_options={})
-    grid=Grid::Matrix.new(default_columns_options) 
+    grid=RGhost::Grid::Matrix.new(default_columns_options) 
     yield grid
     grid.style(default_columns_options[:style]) if default_columns_options[:style]
     set grid
