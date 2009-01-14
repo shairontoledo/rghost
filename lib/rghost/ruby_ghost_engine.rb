@@ -35,7 +35,7 @@ class RGhost::Engine
     file_out.gsub!(/\./,"_%04d.") if multipage
     
     params=RGhost::Config::GS[:default_params].dup #default parameters gs engine
-    params << @document.additional_params.join(" ")
+    params << @document.additional_params.join(" ") unless @options[:convert]
     params << "-I#{RGhost::Config::GS[:pslibdir]}"
     params << "-dPDFSETTINGS=/#{@options[:quality]}" if (@options[:device] ==:pdf && @options[:quality])
     params << "-I#{RGhost::Config::GS[:extensions].join(' -I')}" if RGhost::Config::GS[:extensions]
