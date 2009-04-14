@@ -45,9 +45,12 @@ class RGhost::Grid::Rails < RGhost::Grid::Base
     _data.collect do |d|
       line=@rails_cols.collect do |c|
         case c[:field_name]
-          when Symbol: d[c[:field_name]]
-          when String: d.instance_eval c[:field_name]
-          when Proc: d.instance_eval(&c[:field_name])
+          when Symbol
+            d[c[:field_name]]
+          when String
+            d.instance_eval c[:field_name]
+          when Proc
+            d.instance_eval(&c[:field_name])
         end
       end
       proc_line(line)

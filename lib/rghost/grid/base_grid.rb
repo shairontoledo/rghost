@@ -126,11 +126,16 @@ class RGhost::Grid::Base < RGhost::PsObject
 
   def format_field(value,type) #:nodoc:
     case type
-    when Symbol: RGhost::Grid::FieldFormat.send(type,value)
-    when String: RGhost::Grid::FieldFormat.string(type % value)
-    when NilClass: RGhost::Grid::FieldFormat.string(value)
-    when Class: type.new(value).gs_format
-    when Proc: RGhost::Grid::FieldFormat.string(type.call(value))
+    when Symbol
+      RGhost::Grid::FieldFormat.send(type,value)
+    when String
+      RGhost::Grid::FieldFormat.string(type % value)
+    when NilClass
+      RGhost::Grid::FieldFormat.string(value)
+    when Class
+      type.new(value).gs_format
+    when Proc
+      RGhost::Grid::FieldFormat.string(type.call(value))
 
     else raise TypeError.new("type=#{type}, value type=#{value.class}")
     end
@@ -207,9 +212,12 @@ class RGhost::Grid::Base < RGhost::PsObject
   # link:images/setstyle03.png
   def style(type=:border_lines)
     st=case type
-    when :border_lines: RGhost::Grid::Style::BorderLines.new
-    when :old_forms: RGhost::Grid::Style::OldForms.new
-    when :bottom_lines: RGhost::Grid::Style::BottomLines.new
+    when :border_lines
+      RGhost::Grid::Style::BorderLines.new
+    when :old_forms
+      RGhost::Grid::Style::OldForms.new
+    when :bottom_lines
+      RGhost::Grid::Style::BottomLines.new
     else raise NameError.new("Why? #{type} ?")
     end
 

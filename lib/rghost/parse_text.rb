@@ -5,10 +5,10 @@ module RGhost::ParseText #:nodoc:
     
     unless @tag_parse
       case @options[:text_align]
-      when :center, :right:
+      when :center, :right
         @text.split(/\n/).map{|l| "#{to_string(l)} :text_proc_cr :nbw " }.to_s  
         jump_with=':nbw'
-      when :left,nil:
+      when :left,nil
         if self.class == RGhost::Text
           return @text.split(/\n/).map{|l| " :text #{to_string(l)} :text_proc nrdp " }.to_s 
 

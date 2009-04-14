@@ -45,10 +45,11 @@ class RGhost::Callback < RGhost::PsObject
   private
   def num_to_array(value)
     case value
-      when Fixnum: 
+      when Fixnum
         a=[]
         a << value
-      when NilClass: []
+      when NilClass
+        []
       else
         value
     end
