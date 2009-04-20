@@ -74,7 +74,7 @@ class RGhost::Document < RGhost::PsFacade
   #* <tt>:fontsize</tt> - Defines the size of tag :default_font.
   #* <tt>:row_height and row_padding</tt> - Its names say by itself :)
   #* <tt>:font_encoding</tt> - Specifies encoding of data input. You can look for supported encoding using the method RGhost::Config.encode_test
-  def initialize(options={})
+  def initialize(options={},&block)
     super()
     @head,@callbacks=RGhost::PsObject.new,RGhost::PsObject.new
     @head.set RGhost::Load.library(:type)
@@ -90,7 +90,7 @@ class RGhost::Document < RGhost::PsFacade
     @additional_params=[]
     
     default_variables
-    
+    yield self if block
   end
   
   def gs_paper #:nodoc:
@@ -251,10 +251,17 @@ class RGhost::Document < RGhost::PsFacade
   # printer.write doc.render_stream(:ps) 
   # printer.close
   def render_stream(device,options={})
+    #    rg=render(device,options)
+    #    out=rg.output.readlines.join
+    #    rg.clear_output
+    #    out
+
     rg=render(device,options)
-    out=rg.output.readlines.join
+    out=rg.output
+    raise "RGhost::#{rg.errors} - #{out}" if rg.error?
+    data=out.readlines.join
     rg.clear_output
-    out
+    data
   end
   #Facade to Function.new
   #Defines low level function to optimize repetitive piece of code.
@@ -318,16 +325,16 @@ class RGhost::Document < RGhost::PsFacade
     set RGhost::VirtualPages.new(&block)
   end
   {
-       :base => -4,
-     :print => -4,
-     :modify => -8,
-     :copy => -16,
-     :annotate => -32,
-     :interactive => -256,
-     :copy_access =>  -512,
-     :assemble => -1024,
-     :high_quality_print => -2048,
-     :all => -3904}
+    :base => -4,
+    :print => -4,
+    :modify => -8,
+    :copy => -16,
+    :annotate => -32,
+    :interactive => -256,
+    :copy_access =>  -512,
+    :assemble => -1024,
+    :high_quality_print => -2048,
+    :all => -3904}
   
   #Security disable the permissions and define passwords to PDF documents. 
   #The password just support set of \w .
@@ -359,9 +366,9 @@ class RGhost::Document < RGhost::PsFacade
   # end
   #
   def security
-     sec=RGhost::PdfSecurity.new
-     yield sec
-     @additional_params << sec.gs_params
+    sec=RGhost::PdfSecurity.new
+    yield sec
+    @additional_params << sec.gs_params
   end
   
   #Starts and Ends internal benckmark will write in bottom of page.
