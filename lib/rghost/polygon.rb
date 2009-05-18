@@ -57,7 +57,7 @@ class RGhost::Polygon < RGhost::PsObject
   
   def ps
     graph=RGhost::Graphic.new 
-    graph.set Cursor.moveto(@options)
+    graph.set RGhost::Cursor.moveto(@options)
     graph.set RGhost::Border.new(@options[:border]) if @options[:border]
     
     @points.each{|p|  graph.set RGhost::Line.rlineto(p) }

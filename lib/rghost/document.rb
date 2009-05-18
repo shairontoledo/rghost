@@ -75,11 +75,12 @@ class RGhost::Document < RGhost::PsFacade
   #* <tt>:row_height and row_padding</tt> - Its names say by itself :)
   #* <tt>:font_encoding</tt> - Specifies encoding of data input. You can look for supported encoding using the method RGhost::Config.encode_test
   def initialize(options={},&block)
-    super()
+    
+    
     @head,@callbacks=RGhost::PsObject.new,RGhost::PsObject.new
     @head.set RGhost::Load.library(:type)
     @head.set RGhost::Load.library(:unit)
-    
+    #super()
     @variables=DEFAULT_OPTIONS.dup.merge(options)
     default_encoding
     @paper=RGhost::Paper.new(options[:paper] || :A4, options)
@@ -90,7 +91,9 @@ class RGhost::Document < RGhost::PsFacade
     @additional_params=[]
     
     default_variables
-    yield self if block
+    super()
+    #block.call(self) if block
+    #yield self if block
   end
   
   def gs_paper #:nodoc:
@@ -148,7 +151,7 @@ class RGhost::Document < RGhost::PsFacade
   end   
     
   def ps #:nodoc:
-    done unless @done
+    done 
     
     
     
@@ -251,17 +254,10 @@ class RGhost::Document < RGhost::PsFacade
   # printer.write doc.render_stream(:ps) 
   # printer.close
   def render_stream(device,options={})
-    #    rg=render(device,options)
-    #    out=rg.output.readlines.join
-    #    rg.clear_output
-    #    out
-
     rg=render(device,options)
-    out=rg.output
-    raise "RGhost::#{rg.errors} - #{out}" if rg.error?
-    data=out.readlines.join
+    out=rg.output.readlines.join
     rg.clear_output
-    data
+    out
   end
   #Facade to Function.new
   #Defines low level function to optimize repetitive piece of code.
@@ -325,16 +321,16 @@ class RGhost::Document < RGhost::PsFacade
     set RGhost::VirtualPages.new(&block)
   end
   {
-    :base => -4,
-    :print => -4,
-    :modify => -8,
-    :copy => -16,
-    :annotate => -32,
-    :interactive => -256,
-    :copy_access =>  -512,
-    :assemble => -1024,
-    :high_quality_print => -2048,
-    :all => -3904}
+       :base => -4,
+     :print => -4,
+     :modify => -8,
+     :copy => -16,
+     :annotate => -32,
+     :interactive => -256,
+     :copy_access =>  -512,
+     :assemble => -1024,
+     :high_quality_print => -2048,
+     :all => -3904}
   
   #Security disable the permissions and define passwords to PDF documents. 
   #The password just support set of \w .
@@ -366,9 +362,9 @@ class RGhost::Document < RGhost::PsFacade
   # end
   #
   def security
-    sec=RGhost::PdfSecurity.new
-    yield sec
-    @additional_params << sec.gs_params
+     sec=RGhost::PdfSecurity.new
+     yield sec
+     @additional_params << sec.gs_params
   end
   
   #Starts and Ends internal benckmark will write in bottom of page.
@@ -454,14 +450,18 @@ class RGhost::Document < RGhost::PsFacade
 
   #Informs is ready to converts/prints
   def done
-    @done=true
-    raw "\n\n"
-    call :after_page_create
-    call :callback
-    call :after_document_create
     
-    showpage
-    raw "\n%%EOF"
+    unless @done
+      @done=true
+      raw "\n\n"
+      call :after_page_create
+      call :callback
+      call :after_document_create
+    
+      showpage
+      raw "\n%%EOF"
+    end
+    self
   end
   def enable_virtual_pages
     set RGhost::Variable.new(:has_vp?, true)

@@ -13,12 +13,9 @@ class RGhost::Image < RGhost::PsObject
   def self.for(path,options={})
     
     clazz=case path
-      when /gif$/i
-        RGhost::Gif
-      when /jpe?g$/i
-        RGhost::Jpeg
-      when /(eps|template)$/i
-        RGhost::Eps
+      when /gif$/i: RGhost::Gif
+      when /jpe?g$/i: RGhost::Jpeg
+      when /(eps|template)$/i : RGhost::Eps
       else raise NameError.new("Unsupported format")
     end
     

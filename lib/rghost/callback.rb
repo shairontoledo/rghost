@@ -27,7 +27,7 @@ class RGhost::Callback < RGhost::PsObject
   def initialize(name,options={},&block)
     
     super(""){}
-    set RGhost::PsFacade.new(&block)
+    set RGhost::PsFacade.new(&block) if block
     @name=name
     @options=options
     
@@ -45,11 +45,10 @@ class RGhost::Callback < RGhost::PsObject
   private
   def num_to_array(value)
     case value
-      when Fixnum
+      when Fixnum: 
         a=[]
         a << value
-      when NilClass
-        []
+      when NilClass: []
       else
         value
     end

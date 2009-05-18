@@ -38,14 +38,10 @@ module RGhost::RubyToPs
     ps_arr=[]
     arr.each do |a|
       ps_arr << case a
-      when TrueClass,FalseClass
-        to_bool(a)
-      when Numeric
-        a
-      when Proc
-        a.to_s
-      when Array
-        to_array(a)
+      when TrueClass,FalseClass: to_bool(a)
+      when Numeric: a
+      when Proc: a.to_s
+      when Array: to_array(a)
       else
         to_string(a.to_s)
       end
@@ -70,8 +66,7 @@ module RGhost::RubyToPs
     tudo=""
     s.each do |v|
       case v
-      when /^%/
-        tudo << "#{v.gsub(/%/,'')} to_s show "
+      when /^%/: tudo << "#{v.gsub(/%/,'')} to_s show "
       else
         tudo << "(#{ps_escape(v)}) show "
       end

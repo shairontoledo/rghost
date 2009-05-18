@@ -87,10 +87,8 @@ class RGhost::Paper < RGhost::PsObject
     
     
     return case RGhost::Config::GS[:unit].new
-    when RGhost::Units::Cm
-      (value.to_f*72/2.545).to_i
-    when RGhost::Units::Inch
-      (value.to_f*72).to_i
+    when RGhost::Units::Cm: (value.to_f*72/2.545).to_i
+    when RGhost::Units::Inch: (value.to_f*72).to_i
     else
       value
     end
@@ -107,10 +105,9 @@ class RGhost::Paper < RGhost::PsObject
     #end
      
     case @options[:margin]
-    when Numeric
-      mt=mr=mb=ml=RGhost::Units::parse(@options[:margin])
-    when Array
-      mt=RGhost::Units::parse(@options[:margin][0] || DEFAULT_OPTIONS[:margin_top] )
+    when Numeric: mt=mr=mb=ml=RGhost::Units::parse(@options[:margin])
+    when Array:
+        mt=RGhost::Units::parse(@options[:margin][0] || DEFAULT_OPTIONS[:margin_top] )
       mr=RGhost::Units::parse(@options[:margin][1] || DEFAULT_OPTIONS[:margin_right])
       mb=RGhost::Units::parse(@options[:margin][2] || DEFAULT_OPTIONS[:margin_bottom])
       ml=RGhost::Units::parse(@options[:margin][3] || DEFAULT_OPTIONS[:margin_left] )
@@ -127,11 +124,12 @@ class RGhost::Paper < RGhost::PsObject
   def format_paper
 
     case @paper
-    when Symbol
-      p=RGhost::Constants::Papers::STANDARD[@paper.to_s.downcase.to_sym]
+    when Symbol: 
+     
+        p=RGhost::Constants::Papers::STANDARD[@paper.to_s.downcase.to_sym]
       p.reverse! if @options[:landscape] 
       {:rg => "/pagesize #{to_array( p  ) } def\n", :gs => p, :done => true}
-    when Array
+    when Array: 
         @paper.reverse! if @options[:landscape] 
       {:rg => "/pagesize #{to_array( @paper.map{|v| to_pt(v) } ) } def\n", :gs => @paper, :done => false}
     end

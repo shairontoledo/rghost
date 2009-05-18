@@ -41,10 +41,11 @@ require 'rectangle_link'
 class RGhost::PsFacade < RGhost::PsObject
   attr_reader :rows
   
-  def initialize(&block)
+  def initialize #(&block)
     super(""){}
     @rows=0
-    instance_eval(&block) if block
+    yield self if block_given?
+    #instance_eval(&block) if block
   end
   
   #A facade for the method Cursor.next_row
@@ -65,13 +66,23 @@ class RGhost::PsFacade < RGhost::PsObject
   end
 
   #A facade for the class Graphic
-  def graphic(ps_obj=RGhost::PsObject.new,&block)
-    set RGhost::Graphic.new(ps_obj,&block)
+  def graphic(&block)
+    psfc=RGhost::PsFacade.new
+    yield psfc
+    raw :gsave
+    set psfc
+    raw :grestore
+
   end
 
   #A facade for the class NewPath
   def newpath(&block)
-    set RGhost::NewPath.new(&block)
+    psfc=RGhost::PsFacade.new
+    yield psfc
+    raw :newpath
+    set psfc
+    raw :closepath
+    #set RGhost::NewPath.new(&block)
   end
 
   #A facade for the method Cursor.showpage

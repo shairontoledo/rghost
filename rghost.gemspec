@@ -5,7 +5,7 @@ require 'rubygems'
 
 spec = Gem::Specification.new do |s|
   s.name      = "rghost"
-  s.version = "0.8.6.3"
+  s.version = "0.8.7"
   s.author    = "Shairon Toledo"
   s.email     = "shairon.toledo@gmail.com"
   s.homepage = "http://rghost.rubyforge.org"
