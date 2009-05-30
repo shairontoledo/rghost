@@ -3,7 +3,7 @@
 require 'ps_object'
 require 'font'
 require 'function'
-require 'color'
+
 
 class RGhost::FontMap < RGhost::PsObject #:nodoc:
   include RGhost::RubyToPs
