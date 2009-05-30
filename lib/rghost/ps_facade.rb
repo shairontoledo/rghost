@@ -1,5 +1,5 @@
 [:ps_object, :dynamic_document_callback,:static_document_callback, :paper, :load,
-:cursor,:show, :color :graphic, :newpath, :line,  :parse_text,:line_width, :textarea, 
+:cursor,:show, :color, :graphic, :newpath, :line,  :parse_text,:line_width, :textarea, 
 :variable, :eps, :jpeg, :gif, :text_in, :text_link_in, :ruby_ghost_engine, :convert,
 :text, :dash, :border, :shape_content,  :vertical_line, :horizontal_line, 
 :frame, :polygon, :circle, :how_to, :rectangle_link].each{|lib| require "rghost/#{lib}" }
