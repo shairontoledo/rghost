@@ -1,7 +1,5 @@
 require "ps_object"
 require "cursor"
-require "color"
-require "point"
 require "point"
 require "line_width"
 #Creates a new graphic state between gsave and grestore postscript primitives. Example
