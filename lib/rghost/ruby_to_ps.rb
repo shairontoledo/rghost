@@ -21,7 +21,8 @@ module RGhost::RubyToPs
 	
   
   def ps_escape(value)
-    value.to_s.gsub(/(\(|\)|\\)/,'\\\\\1')
+    value.to_s.gsub(/\(/,"\050").gsub(/\)/,"\051").gsub(/\\/,"\134")
+    #value.to_s.gsub(/(\(|\)|\\)/,'\\\\\1')
   end
   
   def to_bool(value)
