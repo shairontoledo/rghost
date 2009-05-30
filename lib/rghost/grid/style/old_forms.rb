@@ -1,5 +1,3 @@
-
-
 class RGhost::Grid::Style::OldForms
   
   def set_style(grid)

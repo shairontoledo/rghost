@@ -1,5 +1,3 @@
-
-
 class RGhost::Grid::Style::BottomLines
   
   def set_style(grid)

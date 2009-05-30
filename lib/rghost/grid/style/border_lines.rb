@@ -1,5 +1,3 @@
-
-
 class RGhost::Grid::Style::BorderLines
   
   def set_style(grid)
