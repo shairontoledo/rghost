@@ -1,40 +1,8 @@
-require "ps_object"
-require "dynamic_document_callback"
-require "static_document_callback"
-require "paper"
-require "load"
-#require "function"
-require "font"
-require "cursor"
-require "show"
-require "color"
-require "graphic"
-#require "arc"
-require "newpath"
-require "line"
-require 'parse_text'
-require "line_width"
-require "textarea"
-require "variable"
-require "eps"
-require "jpeg"
-require "gif"
-require "text_in"
-require "text_link_in"
-require "ruby_ghost_engine"
-require "convert"
-require "text"
-require "dash"
-require "border"
-require "shape_content"
-#require "rectangle"
-require "vertical_line"
-require "horizontal_line"
-require "frame"
-require "polygon"
-require "circle"
-require "how_to"
-require 'rectangle_link'
+[:ps_object, :dynamic_document_callback,:static_document_callback, :paper, :load,
+:cursor,:show, :color :graphic, :newpath, :line,  :parse_text,:line_width, :textarea, 
+:variable, :eps, :jpeg, :gif, :text_in, :text_link_in, :ruby_ghost_engine, :convert,
+:text, :dash, :border, :shape_content,  :vertical_line, :horizontal_line, 
+:frame, :polygon, :circle, :how_to, :rectangle_link].each{|lib| require "rghost/#{lib}" }
 
 
 #PsFacade is just a big facade involving an instance of most postscript objects.
