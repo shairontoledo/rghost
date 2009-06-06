@@ -1,5 +1,5 @@
-require "ps_object"
-require "units"
+require "rghost/ps_object"
+require "rghost/units"
 #Creates horizontal line on the current row.
 class RGhost::HorizontalLine < RGhost::PsObject
   

@@ -1,8 +1,8 @@
-require "ps_object"
-require "units"
-require "load"
-require "constants"
-require "ruby_to_ps"
+require "rghost/ps_object"
+require "rghost/units"
+require "rghost/load"
+require "rghost/constants"
+require "rghost/ruby_to_ps"
 #Paper is the area where the Postscript elements/objects are drawn. 
 #The margin is the document's non-printable area (both by the cursors and by the page's internal controllers). 
 #The :area_x and :area_y are the printable section of the paper.

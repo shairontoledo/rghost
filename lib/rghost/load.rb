@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 module RGhost::Load
   #Loads library
   def self.library(name, type=:ps)

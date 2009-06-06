@@ -1,5 +1,5 @@
-require "ps_object"
-require "units"
+require "rghost/ps_object"
+require "rghost/units"
 #Draw a circle to the current path(or current row by default).
 #===Options
 #

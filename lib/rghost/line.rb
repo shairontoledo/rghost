@@ -1,5 +1,5 @@
-require "ps_object"
-require "point"
+require "rghost/ps_object"
+require "rghost/point"
 
 #Creates straight lines 
 class RGhost::Line < RGhost::PsObject

@@ -1,6 +1,6 @@
-require "ps_object"
-require "cursor"
-require "ruby_to_ps"
+require "rghost/ps_object"
+require "rghost/cursor"
+require "rghost/ruby_to_ps"
 #TextLinkIn is a helper to combine the cursor positioning and text with hyperlink output into one step as TextIn.
 #It works only PDF format
 class RGhost::TextLinkIn < RGhost::PsObject

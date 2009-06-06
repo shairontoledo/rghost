@@ -1,5 +1,5 @@
-require "function"
-require "ps_object"
+require "rghost/function"
+require "rghost/ps_object"
 #The postscript default unit is the 1/72th inch. RGhost uses the centimeters (cm) as it's default, mainly for positioning coordinates and numeric object sizes (if the size is a String, it won't be parsed to the default unit). This setting can be changed setting the value of RGhost::Config::GS[:unit] before the document is created using any of the Units child classes. 
 #===Example:
 #

@@ -1,5 +1,5 @@
-require "ps_object"
-require "units"
+require "rghost/ps_object"
+require "rghost/units"
 
 #Creates one point using default unit defined in RGhost::Config::GS[:unit]
 class RGhost::Point < RGhost::PsObject

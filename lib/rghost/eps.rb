@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 #Load new EPS file.
 class RGhost::Eps < RGhost::PsObject
   #===Examples

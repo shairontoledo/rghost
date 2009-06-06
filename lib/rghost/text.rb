@@ -1,7 +1,7 @@
-require "ps_object"
-require "units"
-require "font"
-require "ruby_to_ps"
+require "rghost/ps_object"
+require "rghost/units"
+require "rghost/font"
+require "rghost/ruby_to_ps"
 #Wraps the text so as the it fits on the page(:area_x). Wrapping happens at whitespace characters without hyphenation. 
 #Additionally you can make use of predefined tag and the special tag <br/> to break row. You can disable the parse with second parameter tag_parse=false.
 #===Examples

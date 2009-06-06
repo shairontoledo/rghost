@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 #Sets the line width parameter in the graphics state.
 class RGhost::LineWidth < RGhost::PsObject
   

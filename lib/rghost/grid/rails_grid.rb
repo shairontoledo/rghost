@@ -1,4 +1,4 @@
-require 'ps_object'
+require 'rghost/ps_object'
 #
 # Grid::Rails mapps grid columns to ActiveRecord attributes. For
 # example, let's take a Calls class to represent telephone calls.

@@ -1,5 +1,5 @@
-require "ps_object"
-require "ruby_to_ps"  #to_string
+require "rghost/ps_object"
+require "rghost/ruby_to_ps"  #to_string
 
 #Writes a text on the current row or point with align.
 class RGhost::Show < RGhost::PsObject

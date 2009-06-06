@@ -1,5 +1,5 @@
-require "ps_object"
-require "function"
+require "rghost/ps_object"
+require "rghost/function"
 
 class RGhost::Grid::StaticCallback < RGhost::Function
   ACCEPT=[:before_table_create, :after_table_create]

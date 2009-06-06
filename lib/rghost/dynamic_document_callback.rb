@@ -1,4 +1,4 @@
-require "callback" 
+require "rghost/callback" 
 
 class RGhost::DynamicDocumentCallback < RGhost::Callback #:nodoc:
   ACCEPT=[:before_page_create,

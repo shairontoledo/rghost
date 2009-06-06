@@ -1,8 +1,8 @@
-require "ps_object"
-require "graphic"
-require "cursor"
-require "variable"
-require "image"
+require "rghost/ps_object"
+require "rghost/graphic"
+require "rghost/cursor"
+require "rghost/variable"
+require "rghost/image"
   #Loads JPEG image from file
   #===Examples
   # doc=Document.new

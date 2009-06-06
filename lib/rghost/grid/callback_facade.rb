@@ -9,55 +9,55 @@ module RGhost::Grid
   #  values=('A'..'E').to_a.map{|v|  [v,"Name #{v}", Time.now]}
   #
   # even_row:
-  #  grid.even_row do
-  #   background_row(:size => grid.width)
+  #  grid.even_row do |e|
+  #   e.background_row(:size => grid.width)
   #  end
   # link:images/grid01.png
   #
   # Now before_row to create a top and bottom line:
-  #  grid.before_row do
-  #   horizontal_line(:top,    :size => grid.width )
-  #   horizontal_line(:bottom, :size => grid.width)
+  #  grid.before_row do |b|
+  #   b.horizontal_line(:top,    :size => grid.width )
+  #   b.horizontal_line(:bottom, :size => grid.width)
   #  end
   #
   # link:images/grid02.png
   #
   # before_column:
-  #  grid.before_column do
-  #   vertical_line_row
+  #  grid.before_column do |v|
+  #   v.vertical_line_row
   #  end
   #
   # link:images/grid03.png
   #
   # after_column:
-  #  grid.after_column {  vertical_line_row  }
+  #  grid.after_column {|c|  c.vertical_line_row  }
   #
   #
   # link:images/grid04.png
   #
   # Moving to the header
-  #  grid.header.before_create do
-  #   horizontal_line(:top, :size => grid.width)
+  #  grid.header.before_create do |b|
+  #   b.horizontal_line(:top, :size => grid.width)
   #  end
   #
   # link:images/grid05.png
   #
   # Finishing the grid lines:
-  #  grid.header.before_column do
-  #    vertical_line_row
+  #  grid.header.before_column do |b|
+  #    b.vertical_line_row
   #  end
   #
   #
-  #  grid.header.after_column do
-  #   vertical_line_row
+  #  grid.header.after_column do |b|
+  #   b.vertical_line_row
   #  end
   #
   # link:images/grid06.png
   #
   # Now a adding a bold font to the header
-  #  grid.header.before_create do
-  #    horizontal_line(:top, :size => grid.width)
-  #    use_tag :bold
+  #  grid.header.before_create do |b|
+  #    b.horizontal_line(:top, :size => grid.width)
+  #    b.use_tag :bold
   #   end
   #
   # link:images/grid07.png
@@ -66,7 +66,7 @@ module RGhost::Grid
   # face. We need to use a header callback to reset the font.
   #
   #  grid.header.after_create do
-  #     use_tag :normal
+  #     b.use_tag :normal
   #   end
   #
   # link:images/grid08.png

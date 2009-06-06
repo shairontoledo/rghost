@@ -1,5 +1,5 @@
-require "ps_object"
-require 'function'
+require "rghost/ps_object"
+require 'rghost/function'
 
 class RGhost::StaticDocumentCallback < RGhost::Function #:nodoc:
   ACCEPT=[:before_document_create,

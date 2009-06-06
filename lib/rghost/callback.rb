@@ -1,5 +1,5 @@
-require "ps_object"
-require "ruby_to_ps"
+require "rghost/ps_object"
+require "rghost/ruby_to_ps"
 
 # Callbacks are custom code blocks defined inside of Document. 
 # All callbacks received implicitly a instance of PsFacade can be creates any PsObject.
@@ -10,12 +10,12 @@ require "ruby_to_ps"
 # Otherwise Dynamic callbacks there is control of scope using conditional :only or :except, this is only difference in relation the static callbacks.
 # The parameters of a Dynamic callbak must be one integer or one array of integer. Example:
 # For all pages except page 3
-#  doc.before_page_create :except => 3 do
+#  doc.before_page_create :except => 3 do |b|
 #      # do something
 #  end
 # 
 # For just 2 and 4 pages
-#  doc.before_page_create :only => [2,4] do
+#  doc.before_page_create :only => [2,4] do |b|
 #      # do something
 #  end
 # 

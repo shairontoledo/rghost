@@ -1,6 +1,6 @@
-require "ps_object"
-require "units"
-require "load"
+require "rghost/ps_object"
+require "rghost/units"
+require "rghost/load"
 
 #Creates vertical line starting from current row. 
 class RGhost::VerticalLine < RGhost::PsObject

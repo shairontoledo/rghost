@@ -1,10 +1,10 @@
 $LOAD_PATH << File.dirname(__FILE__)+File::SEPARATOR+"../"
-require "ps_object"
-require "ruby_to_ps"
-require "variable"
-require "units"
-require "function"
-require "callback"
+require "rghost/ps_object"
+require "rghost/ruby_to_ps"
+require "rghost/variable"
+require "rghost/units"
+require "rghost/function"
+require "rghost/callback"
 
 # Grid's Header.
 # You can get a header instance using:

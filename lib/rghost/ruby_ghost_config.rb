@@ -1,6 +1,6 @@
-require "ps_object"
+require "rghost/ps_object"
 require 'iconv'
-require 'font_map'  
+require 'rghost/font_map'
 
 #Rghost setup with Ghostscript.
 #Ghostscript runs on a variety of platforms, this is why we recommend the non coupled install for non *nix environments. 
@@ -95,8 +95,8 @@ module RGhost::Config
   def self.is_ok?
     d=RGhost::Document.new  :margin_left => 2.3, :margin_bottom => 2.3
     d.benchmark(:start)
-    d.before_page_create do
-      image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
+    d.before_page_create do |b|
+      b.image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
     end
     d.define_tags do
       new :bigger,   :size => 150, :color => "#AAFF33"
@@ -126,8 +126,8 @@ module RGhost::Config
   #
   def self.encode_test(value)
     d=RGhost::Document.new  :paper => :A4, :margin_left => 2 #, :landscape => true
-    d.before_page_create do
-      image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
+    d.before_page_create do |b|
+      b.image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
     end
     exp=File.join(File.dirname(__FILE__),"ps","*.enc")
     d.show "String (Using Helvetica Font)", :with => :b
@@ -160,8 +160,8 @@ module RGhost::Config
   def self.environment_fonts(text="The quick brown fox jumps over the lazy dog")
     
     d=RGhost::Document.new  :margin_left => 2.3, :margin_bottom => 2.3
-    d.before_page_create do
-      image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
+    d.before_page_create do |b|
+      b.image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
     end
     d.show "Search Path"
     d.horizontal_line :bottom

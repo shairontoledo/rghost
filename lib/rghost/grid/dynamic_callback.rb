@@ -1,5 +1,5 @@
-require "callback" 
-#Callbacks Din�micos a n�vel de Grid
+require "rghost/callback" 
+#Dynamic Callbacks
 class RGhost::Grid::DynamicCallback < RGhost::Callback
   ACCEPT=[:before_row, :after_row, :even_row, 
             :odd_row, :before_column, :after_column, :even_column, :odd_column]

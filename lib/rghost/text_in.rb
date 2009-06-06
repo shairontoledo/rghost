@@ -1,6 +1,6 @@
-require "ps_object"
-require "cursor"
-require "ruby_to_ps"
+require "rghost/ps_object"
+require "rghost/cursor"
+require "rghost/ruby_to_ps"
 #TextIn is a helper to combine the cursor positioning and text output into one step.
 class RGhost::TextIn < RGhost::PsObject
   include RGhost::RubyToPs

@@ -1,6 +1,6 @@
-require "ps_object"
-require "constants"
-require "ruby_to_ps" #array_to_stack
+require "rghost/ps_object"
+require "rghost/constants"
+require "rghost/ruby_to_ps" #array_to_stack
 
 #Creates color for postscript components
 class RGhost::Color < RGhost::PsObject

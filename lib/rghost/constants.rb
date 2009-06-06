@@ -1,4 +1,4 @@
-require "helpers"
+require "rghost/helpers"
 
 module RGhost::Constants
   module HashKeyMethod #:nodoc:

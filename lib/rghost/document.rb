@@ -26,12 +26,12 @@
 #WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 #FROM, OUT OF OR IN CONNECTION WITH
 
-require 'ps_object'
-require 'ps_facade'
-require 'document_callback_facade'
-require 'virtual_pages'
-require 'variable'
-require 'pdf_security'
+require 'rghost/ps_object'
+require 'rghost/ps_facade'
+require 'rghost/document_callback_facade'
+require 'rghost/virtual_pages'
+require 'rghost/variable'
+require 'rghost/pdf_security'
 #The Document class child of PsFacade is used to join postscript objects to generate output file. 
 
 class RGhost::Document < RGhost::PsFacade 
@@ -66,8 +66,8 @@ class RGhost::Document < RGhost::PsFacade
   #* <tt>:count_pages</tt> - Defines postscript internal variable to display with class TextIn. Example:
   #
   # doc=Document.new :count_pages => 10
-  # doc.before_page_create :except => 1 do
-  #  text_in :x => 15, :y => 5, :write => "Page %current_page% of %count_pages%"
+  # doc.before_page_create :except => 1 do |b|
+  #  b.text_in :x => 15, :y => 5, :write => "Page %current_page% of %count_pages%"
   # end
   # 
   #The value above %count_pages% will be evaluated inside of document for all pages except page one.

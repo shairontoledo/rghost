@@ -5,7 +5,7 @@ require 'rubygems'
 
 spec = Gem::Specification.new do |s|
   s.name      = "rghost"
-  s.version = "0.8.7"
+  s.version = "0.8.7.2"
   s.author    = "Shairon Toledo"
   s.email     = "shairon.toledo@gmail.com"
   s.homepage = "http://rghost.rubyforge.org"
@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   candidates = Dir.glob("{bin,docs,lib,tests}/**/*")
   s.files     = candidates.delete_if do |item|
     #puts item
-    item.include?(".svn") || item.include?(".tar") || item.include?("lib/rghost/doc/") || item.include?("test_") || item.to_s =~  /^doc$/
+    item.include?(".svn") || item.include?(".tar") || item.include?("lib/rghost/doc/") || item.include?("test") || item.include?("test_") || item.to_s =~  /^doc$/
   end
   s.require_path      = "lib"
 end

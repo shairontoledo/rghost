@@ -1,8 +1,8 @@
-require "ps_object"
-require "units"
-require "font"
-require "ruby_to_ps"
-require 'parse_text'
+require "rghost/ps_object"
+require "rghost/units"
+require "rghost/font"
+require "rghost/ruby_to_ps"
+require 'rghost/parse_text'
 #TextArea wraps the text so as the it fits in a box of a given width. Wrapping happens at whitespace characters without hyphenation.
 #Additionally you can make use of predefined tag and the special tag <br/> to break row. 
 #The alignment can be left, right and centered.

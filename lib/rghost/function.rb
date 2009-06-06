@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 
 
 #Creates postscript internal function. Example

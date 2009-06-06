@@ -1,5 +1,5 @@
-require 'ruby_ghost_config'
-require "constants"
+require 'rghost/ruby_ghost_config'
+require "rghost/constants"
 
 class RGhost::Engine
   attr_reader :errors, :error, :output
@@ -73,11 +73,11 @@ class RGhost::Engine
     #puts params.inspect
     
     if RGhost::Config::GS[:mode] == :gslib
-      require "rgengine"
+      require "rghost/rgengine"
       gs=RGEngine.new 
       @error=!gs.render(params,params.size)
     else
-      require 'gs_alone'
+      require 'rghost/gs_alone'
       gs=RGhost::GSAlone.new(params,@options[:debug])
       @error=!gs.run
     end

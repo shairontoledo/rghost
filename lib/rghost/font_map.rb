@@ -1,8 +1,8 @@
 #NetDeseigners <www.ndesigners.com.br>
 #Shairon Toledo <shairon.toledo@gmail.com>
-require 'ps_object'
-require 'font'
-require 'function'
+require 'rghost/ps_object'
+require 'rghost/font'
+require 'rghost/function'
 
 
 class RGhost::FontMap < RGhost::PsObject #:nodoc:

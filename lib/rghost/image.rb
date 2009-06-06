@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 #Super class of GIF and JPEG.
 class RGhost::Image < RGhost::PsObject
   DEFAULT_OPTIONS={:x=> :limit_left, :y=> 1, :zoom => 100, :rotate => 0}

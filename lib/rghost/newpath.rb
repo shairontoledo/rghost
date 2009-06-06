@@ -1,7 +1,7 @@
-require "ps_object"
-require "cursor"
-require "point"
-require "line_width"
+require "rghost/ps_object"
+require "rghost/cursor"
+require "rghost/point"
+require "rghost/line_width"
 
 #Initializes the current path to be empty, causing the current point to become undefined. 
 class RGhost::NewPath < RGhost::PsObject

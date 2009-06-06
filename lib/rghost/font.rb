@@ -1,6 +1,6 @@
-require "ps_object"
-require "constants"
-require "helpers"
+require "rghost/ps_object"
+require "rghost/constants"
+require "rghost/helpers"
 
 
 class RGhost::Font < RGhost::PsObject #:nodoc:

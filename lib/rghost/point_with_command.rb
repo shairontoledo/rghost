@@ -1,5 +1,5 @@
-require "ps_object"
-require "units"
+require "rghost/ps_object"
+require "rghost/units"
 
 class RGhost::PointWithCommand #:nodoc:
   DEFAULT_POINT={:x => :limit_left , :y => :current_row}

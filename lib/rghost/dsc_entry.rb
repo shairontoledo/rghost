@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 #Specifiesnew  DSC (Document Structuring Conventions)
 class RGhost::DSCEntry < RGhost::PsObject
   #===Example

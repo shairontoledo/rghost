@@ -1,7 +1,7 @@
-require "ps_object"
-require "cursor"
-require "point"
-require "line_width"
+require "rghost/ps_object"
+require "rghost/cursor"
+require "rghost/point"
+require "rghost/line_width"
 #Creates a new graphic state between gsave and grestore postscript primitives. Example
 #   doc=Document.new
 #   doc.graphic do

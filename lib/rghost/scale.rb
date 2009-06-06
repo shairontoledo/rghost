@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 #Scales objects
 
 class RGhost::Scale < RGhost::PsObject

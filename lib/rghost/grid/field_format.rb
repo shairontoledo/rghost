@@ -1,8 +1,8 @@
 $LOAD_PATH << File.dirname(__FILE__)+File::SEPARATOR+"../"
 
-require 'ps_object'
+require 'rghost/ps_object'
 
-require 'ruby_to_ps'
+require 'rghost/ruby_to_ps'
 
 module RGhost::Grid 
   module FieldFormat 

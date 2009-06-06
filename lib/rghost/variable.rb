@@ -1,4 +1,4 @@
-require "ps_object"
+require "rghost/ps_object"
 #Creates Postscript variable
 class RGhost::Variable < RGhost::PsObject
   

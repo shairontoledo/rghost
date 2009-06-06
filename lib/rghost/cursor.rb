@@ -1,6 +1,6 @@
-require "point"
-require 'ps_object'
-require 'point_with_command'
+require "rghost/point"
+require 'rghost/ps_object'
+require 'rghost/point_with_command'
 #It resposible to cursor manipulate. Use it to position objects on the page.
 class RGhost::Cursor < RGhost::PsObject
 
