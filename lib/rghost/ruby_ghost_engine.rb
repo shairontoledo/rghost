@@ -54,16 +54,16 @@ class RGhost::Engine
      
     
     case @document 
-    when RGhost::Document:
+    when RGhost::Document
         file_in="#{tmp_filename}.rgin"
       params.concat @document.gs_paper
       fi=File.open(file_in,'w')
       fi.puts @document.ps
       fi.close
-    when File:
+    when File
         file_in=@document.path
       #@delete_input=false unless @options[:debug]
-    when String:
+    when String
         file_in=@document
       #@delete_input=false unless @options[:debug]
     end
@@ -103,10 +103,10 @@ class RGhost::Engine
 
   def clear_output
     case @output
-    when File:
+    when File
         @output.close
       File.delete(@output.path)
-    when Array: 
+    when Array 
         @output.each do |f| 
         f.close
         File.delete(f.path)
@@ -135,13 +135,13 @@ class RGhost::Engine
   def format_params(v,pre="-d")
     r=[]
     case v
-    when Symbol:
+    when Symbol
         r << "#{pre}#{v}"
-    when Array:
+    when Array
         v.each do |av|
         r << format_params(av,pre).to_s
       end
-    when Hash:
+    when Hash
         v.each do |k,v|
         r << "#{pre}#{k}=#{v.to_s.gsub(/ /,'')}"  	
       end

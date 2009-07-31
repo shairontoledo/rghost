@@ -35,13 +35,13 @@ class RGhost::Color < RGhost::PsObject
   def self.create(color="FFAA99")
     
     return case color
-    when String: RGhost::RGB.new(color)
-    when Symbol:
+    when String then RGhost::RGB.new(color)
+    when Symbol then
         c=RGhost::Constants::Colors::RGB[color]
       raise ArgumentError.new("#{color}##{color.class}") unless c 
       self.create c
          
-    when Array, Hash:
+    when Array, Hash then
         if color.size == 3
         RGhost::RGB.new(color)
       elsif color.size == 4 
@@ -51,7 +51,7 @@ class RGhost::Color < RGhost::PsObject
       else
         raise ArgumentError.new("#{color}##{color.class}")
       end
-    when Numeric: RGhost::Gray.new(color)
+    when Numeric then RGhost::Gray.new(color)
     else
       raise ArgumentError.new("#{color}##{color.class}")
     end
@@ -93,10 +93,10 @@ class RGhost::RGB < RGhost::Color
 	end
 	def color_params
     case @color
-    when Hash:  [@color[:red] || @color[:r],@color[:green] || @color[:g],@color[:blue] || @color[:b]]
-    when Array:  @color
-    when String: hex_to_rgb(@color) 
-    when NilClass: [0,0,1]
+    when Hash then   [@color[:red] || @color[:r],@color[:green] || @color[:g],@color[:blue] || @color[:b]]
+    when Array then  @color
+    when String then hex_to_rgb(@color) 
+    when NilClass then [0,0,1]
     end
 		
 		
@@ -126,8 +126,8 @@ class RGhost::CMYK < RGhost::Color
   
   def ps
     value=case @color
-      when Hash:  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
-      when Array:  @color
+      when Hash then  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+      when Array then  @color
     end
     
     array_to_stack(value.map{|n| n > 1 ? n/100.0: n})+"setcmykcolor"
@@ -147,8 +147,8 @@ class RGhost::CMYKSpot < RGhost::Color
   
   def ps
     value=case @color
-      when Hash:  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
-      when Array:  @color
+      when Hash then  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+      when Array then  @color
     end
     
     array_to_stack(value.map{|n| n > 1 ? n/100.0: n}) + "(#{@name.to_s}) findcmykcustomcolor \n/#{@name.to_s.gsub(' ', '_')} exch def\n\n#{@name.to_s.gsub(' ', '_')} 1 setcustomcolor"
