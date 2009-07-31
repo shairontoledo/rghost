@@ -64,7 +64,7 @@ module RGhost::Config
     :default_params=> %w(gs -dNOPAUSE -dBATCH -dQUIET -dNOPAGEPROMPT),
     :stack_elements => 5000,
     :font_encoding => :IsoLatin,
-    :charset_convert => lambda {|text| Iconv::iconv('latin1','utf-8', text) },
+    :charset_convert => lambda {|text| Iconv::iconv('latin1','utf-8', text).join },
    #:charset_convert => nil,
     :fontsize => 8,
     :unit => RGhost::Units::Cm
@@ -76,7 +76,9 @@ module RGhost::Config
   
   def self.config_platform #:nodoc:
     
-    GS[:path]=case PLATFORM
+    const= 'PLATFORM'
+    const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/  
+    GS[:path]=case Object.const_get(const)
     when /linux/ then "/usr/bin/gs"
     when /darwin/ then "/opt/local/bin/gs"
     when /freebsd|bsd/ then "/usr/local/bin/gs"
