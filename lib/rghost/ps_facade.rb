@@ -238,7 +238,7 @@ class RGhost::PsFacade < RGhost::PsObject
   end
   
   #A facade for the class Circle
-  def circle(option={})
+  def circle(options={})
     set RGhost::Circle.new(options)
   end
 
