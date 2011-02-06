@@ -151,7 +151,7 @@ class RGhost::Grid::Base < RGhost::PsObject
       #puts "#{i} == #{h[i]} = #{v}, #{format_field(v,h[i])}"
       rec << format_field(v,h[i])
     end
-    @data[@data_index] <<  "[#{rec}]\n"
+    @data[@data_index] <<  "[#{rec.join(' ')}]\n"
 
 
     if @record_count == @max_stack
@@ -177,14 +177,14 @@ class RGhost::Grid::Base < RGhost::PsObject
     p.set RGhost::Variable.new(:col_padding,RGhost::Units::parse(@column_padding))
     @data.each do |ary|
       r=(rand*99999).to_i
-      p.raw "/data#{r}[\n#{ary.join}\n] def"
+      p.raw "/data#{r}[\n#{ary.join('')}\n] def"
       grid_names << r
     end
     p.raw "#{@header.ps} #{@callbacks}"
 
     g=RGhost::Graphic.new do
       raw :before_table_create
-      raw grid_names.map{|m| " data#{m} table_proc \n" }.join
+      raw grid_names.map{|m| " data#{m} table_proc \n" }.join('')
       raw :after_table_create
     end
     p.set g
