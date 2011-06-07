@@ -4,18 +4,18 @@ require "rghost/constants"
 class RGhost::Engine
   attr_reader :errors, :error, :output
   DEFAULT_OPTIONS={:device => :pdf }
-  
+
   include RGhost::Constants::Devices
 
   def initialize(document,options={})
-    @document=document   
+    @document=document
     @options=DEFAULT_OPTIONS.merge(options)
     @errors=[]
     @error=false
-    @output=nil	
+    @output=nil
     @delete_input=true
 
-  end 
+  end
 
 
   def render(device=nil)
@@ -28,12 +28,13 @@ class RGhost::Engine
     else
       file_out=tmp_filename
     end
+    external_encoding = RGhost::Config::GS[:external_encoding]
 
     file_err="#{tmp_filename}.rgerr"
-	  
-    multipage=@options[:multipage] 
+
+    multipage=@options[:multipage]
     file_out.gsub!(/\./,"_%04d.") if multipage
-    
+
     params=RGhost::Config::GS[:default_params].dup #default parameters gs engine
     params << @document.additional_params.join(" ") unless @options[:convert]
     params << "-I#{RGhost::Config::GS[:pslibdir]}"
@@ -41,7 +42,7 @@ class RGhost::Engine
     params << "-I#{RGhost::Config::GS[:extensions].join(' -I')}" if RGhost::Config::GS[:extensions]
     params << "-sDEVICE=#{device_for(device)}"
     params.concat format_params(@options[:d],"-d") if  @options[:d]
-    params.concat format_params(@options[:s],"-s") if  @options[:s]     
+    params.concat format_params(@options[:s],"-s") if  @options[:s]
     params << "-r#{@options[:resolution]}" if @options[:resolution]
     params << "-g#{@options[:size]}" if @options[:size]
     if @options[:range]
@@ -49,39 +50,40 @@ class RGhost::Engine
       params << "-dLastPage=#{@options[:range].last}"
     end
     params << "-sstdout=#{file_err}"
-    params << @options[:raw] if @options[:raw] 
+    params << @options[:raw] if @options[:raw]
     params << "-sOutputFile=#{file_out}"
-     
-    
-    case @document 
+
+
+    case @document
     when RGhost::Document
-        file_in="#{tmp_filename}.rgin"
+      file_in="#{tmp_filename}.rgin"
       params.concat @document.gs_paper
-      fi=File.open(file_in,'w')
+      mode=external_encoding.nil? ? 'w' : "w:#{external_encoding}"
+      fi=File.open(file_in,mode)
       fi.puts @document.ps
       fi.close
     when File
-        file_in=@document.path
+      file_in=@document.path
       #@delete_input=false unless @options[:debug]
     when String
-        file_in=@document
+      file_in=@document
       #@delete_input=false unless @options[:debug]
     end
 
     params << file_in
-    
+
     #puts params.inspect
-    
+
     if RGhost::Config::GS[:mode] == :gslib
       require "rghost/rgengine"
-      gs=RGEngine.new 
+      gs=RGEngine.new
       @error=!gs.render(params,params.size)
     else
       require 'rghost/gs_alone'
       gs=RGhost::GSAlone.new(params,@options[:debug])
       @error=!gs.run
     end
-    
+
     if @error # if error
       @errors=File.open(file_err).readlines if File.exists?(file_err)
     else
@@ -96,7 +98,7 @@ class RGhost::Engine
       File.delete(file_err)
       File.delete(file_in) unless (@options[:debug] || @options[:convert])
     rescue
-    end 
+    end
     log(params) if @options[:logfile]
     return @output
   end
@@ -106,8 +108,8 @@ class RGhost::Engine
     when File
         @output.close
       File.delete(@output.path)
-    when Array 
-        @output.each do |f| 
+    when Array
+        @output.each do |f|
         f.close
         File.delete(f.path)
       end
@@ -125,13 +127,13 @@ class RGhost::Engine
     flog.puts "[#{id}] GS OPTIONS: #{gp.join(" ")}"
     if @error
       flog.puts "[#{id}] EXIT STATUS: ERROR"
-      flog.puts @errors.uniq.map {|m| "[#{id}] #{m}" }.to_s;         
+      flog.puts @errors.uniq.map {|m| "[#{id}] #{m}" }.to_s;
     else
-      flog.puts "[#{id}] EXIT STATUS: OK"				
+      flog.puts "[#{id}] EXIT STATUS: OK"
     end
   end
-	
-	
+
+
   def format_params(v,pre="-d")
     r=[]
     case v
@@ -143,14 +145,13 @@ class RGhost::Engine
       end
     when Hash
         v.each do |k,v|
-        r << "#{pre}#{k}=#{v.to_s.gsub(/ /,'')}"  	
+        r << "#{pre}#{k}=#{v.to_s.gsub(/ /,'')}"
       end
     else
-      return "" 
+      return ""
     end
-    return r; 
+    return r;
   end
 
 end
-
 
