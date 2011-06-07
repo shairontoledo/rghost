@@ -3,12 +3,12 @@ require 'iconv'
 require 'rghost/font_map'
 
 #Rghost setup with Ghostscript.
-#Ghostscript runs on a variety of platforms, this is why we recommend the non coupled install for non *nix environments. 
+#Ghostscript runs on a variety of platforms, this is why we recommend the non coupled install for non *nix environments.
 #The gem already comes with a set of defaults but you can change the settings using the Hash RGhost::Config::GS before each use of the API. Listed below are the keys of the said hash.
 #===RGhost::Config::GS[:mode]
 #Operating mode
 #* <tt>:gsparams</tt> In this mode RGhost just pass parameters to the Ghostscript framework.
-#* <tt>:gsapi</tt> based on the exchange of data between Ruby and Ghostscript via rgengine.so using gslib.so.8 or gslib-esp.so.8. 
+#* <tt>:gsapi</tt> based on the exchange of data between Ruby and Ghostscript via rgengine.so using gslib.so.8 or gslib-esp.so.8.
 #
 #===RGhost::Config::GS[:path]
 #Path to the ghostscript executable.
@@ -33,7 +33,7 @@ require 'rghost/font_map'
 #RGhost::Config::GS[:stack_elements]=5000
 #
 #===RGhost::Config::GS[:unit]
-#Set the measure units. See Units::Unit for available units. 
+#Set the measure units. See Units::Unit for available units.
 #====Example
 #RGhost::Config::GS[:unit]=Units::Cm
 #
@@ -48,11 +48,17 @@ require 'rghost/font_map'
 #====Example
 #RGhost::Config::GS[:font_encoding]= :IsoLatin
 #
+#===RGhost::Config::GS[:external_encoding]
+#Sets the file-in external encoding (Ruby 1.9). Affects how data will be written and
+#could help when dealing with encoding conversion errors. Default: nil
+#====Example
+#RGhost::Config::GS[:external_encoding]= 'ascii-8bit'
+#
 module RGhost::Config
-  
+
   DEFAULT_PORTRAIT_TEMPLATE  = File.join(File.dirname(__FILE__),"ps","rghost_default_template.eps")
-  
-  
+
+
   GS={
     :mode => :gsparams,
     :plugin => nil,
@@ -66,18 +72,19 @@ module RGhost::Config
     :font_encoding => :IsoLatin,
     :charset_convert => lambda {|text| Iconv::iconv('latin1','utf-8', text).join },
    #:charset_convert => nil,
+    :external_encoding => nil,
     :fontsize => 8,
     :unit => RGhost::Units::Cm
   }
- 
- 
-    
- 
-  
+
+
+
+
+
   def self.config_platform #:nodoc:
-    
+
     const= 'PLATFORM'
-    const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/  
+    const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/
     GS[:path]=case Object.const_get(const)
     when /linux/ then "/usr/bin/gs"
     when /darwin/ then "/opt/local/bin/gs"
@@ -108,13 +115,13 @@ module RGhost::Config
     d.text_in :x => 10, :y=> 13, :write => "RGhost Version " + RGhost::VERSION::STRING
     d.text_in :x => 10, :y=> 12, :write => "Created at " + Time.at(RGhost::VERSION::DATE).to_s
     d.text_in :x => 10, :y=> 11, :write => "Now " + Time.now.to_s
-    
+
     d.benchmark(:stop)
     d.done
     d
-    
-    
-    
+
+
+
   end
   #This method is a helper to gets the best encoding.
   #
@@ -122,7 +129,7 @@ module RGhost::Config
   #
   #You can generate this page with the code.
   # RGhost::Config.encode_teste("Fiancé").render :pdf, :filename => "/tmp/mytest.pdf"
-  # 
+  #
   #The encode will use on Document class.
   # doc=Document.new :font_encoding => 'IsoLatin'
   #
@@ -137,7 +144,7 @@ module RGhost::Config
     d.show "Encode Name", :with => :b
     d.horizontal_line :bottom
     d.next_row
-    
+
     Dir.glob(exp).sort.each do |f|
       name=File.basename(f)
       name.gsub!(/\.enc/,'')
@@ -146,12 +153,12 @@ module RGhost::Config
       d.set RGhost::FontMap.new {
         new(:font_test,  :name => "Helvetica",:size => 8,:color => "#FF0000", :encoding => true)
       }
-      
+
       d.show "#{value}" , :with => :font_test
       d.moveto :x => 16
       d.show "#{name}", :with =>  :i
       d.next_row
-      
+
     end
     d
   end
@@ -160,7 +167,7 @@ module RGhost::Config
   #link:images/environment_fonts.png
   #
   def self.environment_fonts(text="The quick brown fox jumps over the lazy dog")
-    
+
     d=RGhost::Document.new  :margin_left => 2.3, :margin_bottom => 2.3
     d.before_page_create do |b|
       b.image RGhost::Config::DEFAULT_PORTRAIT_TEMPLATE
@@ -171,10 +178,10 @@ module RGhost::Config
     d.raw :default_font
     d.raw %Q{
     LIBPATH{
-      limit_left  current_row  moveto   show    
+      limit_left  current_row  moveto   show
       nrdp
     } forall
-    
+
     }
     d.next_row
     d.show "Example"
@@ -182,17 +189,17 @@ module RGhost::Config
     d.show "Font Name"
     d.horizontal_line :bottom
     d.next_row
-    #=begin    
+    #=begin
     d.raw %Q{
-      Fontmap{ 
+      Fontmap{
         50 string cvs pop dup findfont 10 scalefont setfont
-        limit_left  current_row  moveto  (#{text})  show    
+        limit_left  current_row  moveto  (#{text})  show
     13 cm  current_row moveto default_font  0 setgray
     50 string cvs show
-    nrdp  
+    nrdp
       } forall
     }
-    #=end    
+    #=end
     d.done
     d
   end
@@ -200,7 +207,7 @@ module RGhost::Config
   # .
   #
   #
-  #Preseted tags   
+  #Preseted tags
   #
   #
   #
@@ -239,5 +246,6 @@ module RGhost::Config
     new :title, :name => "Helvetica", :size => 20
     new :pre,   :name => "Courier"
   end
-  
+
 end
+

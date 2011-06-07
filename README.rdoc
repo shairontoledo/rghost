@@ -1,1 +1,9 @@
-== See the wikis
+== Changed in this fork
+Added an option to set the file-in external encoding to resolve some encoding issues with Ruby 1.9
+
+===RGhost::Config::GS[:external_encoding]
+This affects how data will be written and could help when dealing with encoding conversion errors
+like UndefinedConversionError ... from ASCII-8BIT to UTF-8.
+  RGhost::Config::GS[:external_encoding]= 'ascii-8bit'
+Default: nil
+
