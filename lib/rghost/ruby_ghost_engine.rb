@@ -33,7 +33,7 @@ class RGhost::Engine
     file_err="#{tmp_filename}.rgerr"
 
     multipage=@options[:multipage]
-    file_out.gsub!(/\./,"_%04d.") if multipage
+    file_out.gsub!(/^(.*)\./,'\1_%04d.') if multipage
 
     params=RGhost::Config::GS[:default_params].dup #default parameters gs engine
     params << @document.additional_params.join(" ") unless @options[:convert]
