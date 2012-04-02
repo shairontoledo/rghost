@@ -1,5 +1,4 @@
 require "rghost/ps_object"
-require 'iconv'
 require 'rghost/font_map'
 
 #Rghost setup with Ghostscript.
@@ -70,19 +69,20 @@ module RGhost::Config
     :default_params=> %w(gs -dNOPAUSE -dBATCH -dQUIET -dNOPAGEPROMPT),
     :stack_elements => 5000,
     :font_encoding => :IsoLatin,
-    :charset_convert => lambda {|text| Iconv::iconv('latin1','utf-8', text).join },
-   #:charset_convert => nil,
+    :charset_convert => begin
+      if RUBY_VERSION =~ /^1.9/
+        lambda { |text| text.encode('ISO-8859-1', 'UTF-8') }
+      else
+        require 'iconv'
+        lambda { |text| Iconv::iconv('latin1','utf-8', text).join }
+      end
+    end,
     :external_encoding => nil,
     :fontsize => 8,
     :unit => RGhost::Units::Cm
   }
 
-
-
-
-
   def self.config_platform #:nodoc:
-
     const= 'PLATFORM'
     const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/
     GS[:path]=case Object.const_get(const)
@@ -94,6 +94,7 @@ module RGhost::Config
     not_found_msg="\nGhostscript not found in your environment.\nInstall it and set the variable RGhost::Config::GS[:path] with the executable.\nExample: RGhost::Config::GS[:path]='/path/to/my/gs' #unix-style\n RGhost::Config::GS[:path]=\"C:\\\\gs\\\\bin\\\\gswin32c.exe\"  #windows-style\n"
     raise not_found_msg unless (File.exists? GS[:path])
   end
+
   #Test if your environment is ready to works. If yes the page below will show.
   #
   #link:images/is_ok.png
