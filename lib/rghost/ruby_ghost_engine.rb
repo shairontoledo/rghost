@@ -49,9 +49,9 @@ class RGhost::Engine
       params << "-dFirstPage=#{@options[:range].first}"
       params << "-dLastPage=#{@options[:range].last}"
     end
-    params << "-sstdout=#{file_err}"
+    params << "-sstdout=#{shellescape(file_err)}"
     params << @options[:raw] if @options[:raw]
-    params << "-sOutputFile=#{file_out}"
+    params << "-sOutputFile=#{shellescape(file_out)}"
 
 
     case @document
@@ -70,7 +70,7 @@ class RGhost::Engine
       #@delete_input=false unless @options[:debug]
     end
 
-    params << file_in
+    params << shellescape(file_in)
 
     #puts params.inspect
 
@@ -151,6 +151,23 @@ class RGhost::Engine
       return ""
     end
     return r;
+  end
+
+  def shellescape(str)
+    # An empty argument will be skipped, so return empty quotes.
+    return "''" if str.empty?
+
+    str = str.dup
+
+    # Process as a single byte sequence because not all shell
+    # implementations are multibyte aware.
+    str.gsub!(/([^A-Za-z0-9_\-.,:\/@\n])/n, "\\\\\\1")
+
+    # A LF cannot be escaped with a backslash because a backslash + LF
+    # combo is regarded as line continuation and simply ignored.
+    str.gsub!(/\n/, "'\n'")
+
+    return str
   end
 
 end
