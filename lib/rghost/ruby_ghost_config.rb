@@ -87,7 +87,7 @@ module RGhost::Config
     const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/
     GS[:path]=case Object.const_get(const)
     when /linux/ then "/usr/bin/gs"
-    when /darwin/ then "/opt/local/bin/gs"
+    when /darwin/ then "/usr/local/bin/gs"
     when /freebsd|bsd/ then "/usr/local/bin/gs"
     when /mswin/ then "C:\\gs\\bin\\gswin32\\gswin32c.exe"
     end

@@ -93,7 +93,7 @@ class RGhost::RGB < RGhost::Color
 	end
 	def color_params
     case @color
-    when Hash then   [@color[:red] || @color[:r],@color[:green] || @color[:g],@color[:blue] || @color[:b]]
+    when Hash then   [@color[:r] || @color[:red], @color[:g] || @color[:green],@color[:b] || @color[:blue]]
     when Array then  @color
     when String then hex_to_rgb(@color) 
     when NilClass then [0,0,1]
@@ -101,8 +101,6 @@ class RGhost::RGB < RGhost::Color
 		
 		
   end
-	
-  private
   
   def hex_to_rgb(color="#FFFFFF")
   
@@ -126,10 +124,9 @@ class RGhost::CMYK < RGhost::Color
   
   def ps
     value=case @color
-      when Hash then  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+      when Hash then  [@color[:c] || @color[:cyan],@color[:m] || @color[:magenta] ,@color[:y] || @color[:yellow], @color[:k] || @color[:black]]
       when Array then  @color
     end
-    
     array_to_stack(value.map{|n| n > 1 ? n/100.0: n})+"setcmykcolor"
   end
 
@@ -147,7 +144,7 @@ class RGhost::CMYKSpot < RGhost::Color
   
   def ps
     value=case @color
-      when Hash then  [@color[:cyan] || @color[:c],@color[:magenta] || @color[:m],@color[:yellow] || @color[:y],@color[:black] || @color[:k]]
+      when Hash then  [@color[:c] || @color[:cyan],@color[:m] || @color[:magenta] ,@color[:y] || @color[:yellow], @color[:k] || @color[:black]]
       when Array then  @color
     end
     

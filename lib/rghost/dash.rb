@@ -39,7 +39,6 @@ class RGhost::Dash < RGhost::PsObject
   DEFAULT_OPTIONS={
     :style => [1,2,3],
     :offset => 0
-    
   }
   
   def initialize(options={})

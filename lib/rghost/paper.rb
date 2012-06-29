@@ -21,7 +21,7 @@ class RGhost::Paper < RGhost::PsObject
     :duplex => false, 
     :tumble => false
   }
-  
+  attr_reader :paper, :landscape
   include RGhost::RubyToPs
   #===Examples
   #
@@ -54,6 +54,7 @@ class RGhost::Paper < RGhost::PsObject
   def initialize(paper=:A4, options={})
     
     @options=DEFAULT_OPTIONS.merge(options)
+    @landscape = @options[:landscape] || false
     @paper=paper  
   end 
   
@@ -127,10 +128,10 @@ class RGhost::Paper < RGhost::PsObject
     when Symbol then 
      
         p=RGhost::Constants::Papers::STANDARD[@paper.to_s.downcase.to_sym]
-      p.reverse! if @options[:landscape] 
+      p.reverse! if @landscape
       {:rg => "/pagesize #{to_array( p  ) } def\n", :gs => p, :done => true}
     when Array then
-        @paper.reverse! if @options[:landscape] 
+        @paper.reverse! if @landscape 
       {:rg => "/pagesize #{to_array( @paper.map{|v| to_pt(v) } ) } def\n", :gs => @paper, :done => false}
     end
     

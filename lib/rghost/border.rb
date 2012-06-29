@@ -24,7 +24,7 @@
 class RGhost::Border < RGhost::PsObject
 
   DEFAULT_OPTIONS = {:color => '#49AAFA', :dash => false, :width => 0.5, :linejoin => 0, :linecap => 0  }
-  # aqui tem documentação 
+  
   def initialize(options={})
     super(""){}
     @options = DEFAULT_OPTIONS.dup.merge(options)

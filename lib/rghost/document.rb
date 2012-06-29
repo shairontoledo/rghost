@@ -35,7 +35,8 @@ require 'rghost/pdf_security'
 #The Document class child of PsFacade is used to join postscript objects to generate output file. 
 
 class RGhost::Document < RGhost::PsFacade 
-  attr_reader :additional_params
+  
+  attr_reader :head, :callbacks, :variables, :paper, :done, :defines, :additional_params, :body
   include RGhost::DocumentCallbackFacade
   include RGhost::RubyToPs
   DISABLE_VIRTUAL_PAGE=RGhost::Variable.new(:has_vp?, false)
