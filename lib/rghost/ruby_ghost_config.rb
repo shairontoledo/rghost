@@ -87,8 +87,7 @@ module RGhost::Config
     const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/
     GS[:path]=case Object.const_get(const)
     when /linux/ then "/usr/bin/gs"
-    when /darwin/ then "/usr/local/bin/gs"
-    when /freebsd|bsd/ then "/usr/local/bin/gs"
+    when /darwin|freebsd|bsd/ then "/usr/local/bin/gs"
     when /mswin/ then "C:\\gs\\bin\\gswin32\\gswin32c.exe"
     end
     not_found_msg="\nGhostscript not found in your environment.\nInstall it and set the variable RGhost::Config::GS[:path] with the executable.\nExample: RGhost::Config::GS[:path]='/path/to/my/gs' #unix-style\n RGhost::Config::GS[:path]=\"C:\\\\gs\\\\bin\\\\gswin32c.exe\"  #windows-style\n"
