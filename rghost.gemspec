@@ -3,7 +3,7 @@
 #
 Gem::Specification.new do |s|
   s.name      = "rghost"
-  s.version = "0.8.7.9"
+  s.version = "0.8.8"
   s.authors = ["Shairon Toledo"]
   s.email     = "shairon.toledo@gmail.com"
   s.homepage = "http://rghost.rubyforge.org"
@@ -130,7 +130,6 @@ Gem::Specification.new do |s|
     "lib/rghost/ps_facade.rb",
     "lib/rghost/ps_object.rb",
     "lib/rghost/rectangle_link.rb",
-    "lib/rghost/rgengine.so",
     "lib/rghost/ruby_ghost_config.rb",
     "lib/rghost/ruby_ghost_engine.rb",
     "lib/rghost/ruby_ghost_version.rb",
