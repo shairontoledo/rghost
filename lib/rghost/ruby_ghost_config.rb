@@ -70,11 +70,11 @@ module RGhost::Config
     :stack_elements => 5000,
     :font_encoding => :IsoLatin,
     :charset_convert => begin
-      if RUBY_VERSION =~ /^1.9/
-        lambda { |text| text.encode('ISO-8859-1', 'UTF-8') }
-      else
+      if RUBY_VERSION =~ /^1.8/
         require 'iconv'
         lambda { |text| Iconv::iconv('latin1','utf-8', text).join }
+      else
+        lambda { |text| text.encode('ISO-8859-1', 'UTF-8') }
       end
     end,
     :external_encoding => nil,
@@ -83,8 +83,8 @@ module RGhost::Config
   }
 
   def self.config_platform #:nodoc:
-    const= 'PLATFORM'
-    const = "RUBY_"+const if RUBY_VERSION =~ /^1.9/
+    const = 'PLATFORM'
+    const = "RUBY_"+const if RUBY_VERSION =~ /^(1.9|2.0)/
     GS[:path]=case Object.const_get(const)
     when /linux/ then "/usr/bin/gs"
     when /darwin|freebsd|bsd/ then "/usr/local/bin/gs"
