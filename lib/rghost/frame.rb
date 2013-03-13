@@ -38,7 +38,8 @@ class RGhost::Frame < RGhost::PsObject
     :height => 3.5,
     :corners => 1,
     :content => RGhost::ShapeContent::DEFAULT_OPTIONS,
-    :border => RGhost::Border::DEFAULT_OPTIONS
+    :border => RGhost::Border::DEFAULT_OPTIONS,
+    :stroke => true
     
     
   }
@@ -61,16 +62,17 @@ class RGhost::Frame < RGhost::PsObject
     border=RGhost::Border.new(@options[:border]) if @options[:border]
     
     params=%Q{
-      /rcorners_params{
-        /:x #{x}   def /:y #{y} def
+    /rcorners_params{
+    /:x #{x}   def /:y #{y} def
     /:w #{w} def /:h #{h} def
     /:r #{@options[:corners]} def
     /:s 1 def
+    /:stk {#{ "stroke" if @options[:stroke]} }def 
     /:inside{
-    #{inside.ps if inside }
+      #{inside.ps if inside }
     } def
     /:outside{
-    #{border.ps if border}
+      #{border.ps if border}
     }def
       } def
     }
