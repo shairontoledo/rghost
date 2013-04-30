@@ -60,6 +60,7 @@ module RGhost::Config
 
   GS={
     :mode => :gsparams,
+    :raise_on_error => true,
     :plugin => nil,
     :path => nil,
     :tmpdir => ENV["TMP"] || ENV["TMPDIR"] || ENV["TEMPDIR"] || ENV["TEMP"] || "/tmp",

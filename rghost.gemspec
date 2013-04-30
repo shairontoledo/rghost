@@ -3,7 +3,7 @@
 #
 Gem::Specification.new do |s|
   s.name      = "rghost"
-  s.version = "0.9"
+  s.version = "0.9.1"
   s.authors = ["Shairon Toledo"]
   s.email     = "shairon.toledo@gmail.com"
   s.homepage = "http://rghost.rubyforge.org"

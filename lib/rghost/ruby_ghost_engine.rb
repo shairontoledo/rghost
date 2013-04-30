@@ -67,12 +67,9 @@ class RGhost::Engine
       #@delete_input=false unless @options[:debug]
     when String
       file_in=@document
-      #@delete_input=false unless @options[:debug]
     end
 
     params << shellescape(file_in)
-
-    #puts params.inspect
 
     if RGhost::Config::GS[:mode] == :gslib
       require "rghost/rgengine"
@@ -86,6 +83,7 @@ class RGhost::Engine
 
     if @error # if error
       @errors=File.open(file_err).readlines if File.exists?(file_err)
+      raise RGhost::RenderException.new(@errors.join(" ")) if RGhost::Config::GS[:raise_on_error]
     else
       if multipage
       	file_out.gsub!(/_%04d/,"_*")

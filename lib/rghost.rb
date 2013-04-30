@@ -3,7 +3,7 @@ require 'fileutils'
 
 
 module RGhost
-  
+  class RenderException < Exception; end
 end
 
 require 'rghost/ruby_ghost_version'
