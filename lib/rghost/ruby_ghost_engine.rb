@@ -23,7 +23,7 @@ class RGhost::Engine
     device||=@options[:device]
     tmp_filename=@options[:filename]
     unless tmp_filename
-      tmp_filename||="#{RGhost::Config::GS[:tmpdir]}#{File::SEPARATOR}#{self.object_id.abs}"
+      tmp_filename||= File.join(RGhost::Config::GS[:tmpdir], "#{self.object_id.abs}-#{rand(999999)}-#{Time.now.to_i}")
       file_out="#{tmp_filename}.#{device}"
     else
       file_out=tmp_filename

@@ -3,14 +3,14 @@
 #
 Gem::Specification.new do |s|
   s.name      = "rghost"
-  s.version = "0.8.9"
+  s.version = "0.9"
   s.authors = ["Shairon Toledo"]
   s.email     = "shairon.toledo@gmail.com"
   s.homepage = "http://rghost.rubyforge.org"
   s.platform = Gem::Platform::RUBY
   s.rubyforge_project="Ruby Ghostscript Engine is a document creation and conversion API, support(PDF,PS,GIF,TIF,PNG,JPG...). It uses the GhostScript framework for the format conversion, utilizes EPS templates and is optimized to work with larger documents."
-  s.summary = "Ruby Ghostscript Engine is a document creation and conversion API, support(PDF,PS,GIF,TIF,PNG,JPG...). It uses the GhostScript framework for the format conversion, utilizes EPS templates and is optimized to work with larger documents."
-  s.description=s.summary
+  s.summary = "Ruby Ghostscript Engine is a document creation and conversion API, support(PDF,PS,GIF,TIF,PNG,JPG...). "
+  s.description="Ruby Ghostscript Engine is a document creation and conversion API, support(PDF,PS,GIF,TIF,PNG,JPG...). It uses the GhostScript framework for the format conversion, utilizes EPS templates and is optimized to work with larger documents."
   candidates = Dir.glob("{bin,docs,lib,tests}/**/*")
   s.files     = [
     "lib/rghost",

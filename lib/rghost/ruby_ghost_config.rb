@@ -83,8 +83,8 @@ module RGhost::Config
   }
 
   def self.config_platform #:nodoc:
-    const= 'PLATFORM'
-    const = "RUBY_"+const if RUBY_VERSION =~ /^1.[89]/
+    const = 'PLATFORM'
+    const = "RUBY_"+const if RUBY_VERSION =~ /1\.[89]|2\.\d/
     GS[:path]=case Object.const_get(const)
     when /linux/ then "/usr/bin/gs"
     when /darwin|freebsd|bsd/ then "/usr/local/bin/gs"
