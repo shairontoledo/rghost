@@ -50,8 +50,8 @@ class RGhost::Engine
       params << "-dLastPage=#{@options[:range].last}"
     end
     params << "-sstdout=#{shellescape(file_err)}"
-    params << @options[:raw] if @options[:raw]
     params << "-sOutputFile=#{shellescape(file_out)}"
+    params << @options[:raw] if @options[:raw]
 
 
     case @document
