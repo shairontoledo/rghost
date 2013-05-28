@@ -36,7 +36,7 @@ class RGhost::Font < RGhost::PsObject #:nodoc:
     str_ret+=case size
     when Hash then   "/#{@name} findfont [ #{size[:width]} 0 0 #{size[:height]} 0 0] makefont setfont "
     when Array then  "/#{@name} findfont [ #{size[0]} 0 0 #{size[1]} 0 0] makefont setfont "
-    when Fixnum then "/#{@name} findfont #{size} scalefont setfont "
+    when Numeric then "/#{@name} findfont #{size} scalefont setfont "
     end
     str_ret
   end
