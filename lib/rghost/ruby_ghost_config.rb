@@ -84,14 +84,14 @@ module RGhost::Config
   }
 
   def self.config_platform #:nodoc:
-    const = 'PLATFORM'
-    const = "RUBY_"+const if RUBY_VERSION =~ /1\.[89]|2\.\d/
-    GS[:path]=case Object.const_get(const)
-    when /linux/ then "/usr/bin/gs"
-    when /darwin|freebsd|bsd/ then "/usr/local/bin/gs"
-    when /mswin/ then "C:\\gs\\bin\\gswin32\\gswin32c.exe"
-    end
-    not_found_msg="\nGhostscript not found in your environment.\nInstall it and set the variable RGhost::Config::GS[:path] with the executable.\nExample: RGhost::Config::GS[:path]='/path/to/my/gs' #unix-style\n RGhost::Config::GS[:path]=\"C:\\\\gs\\\\bin\\\\gswin32c.exe\"  #windows-style\n"
+    require 'rbconfig'
+    GS[:path]=case RbConfig::CONFIG['host_os']
+                when /linux/ then '/usr/bin/gs'
+                when /mac|darwin|freebsd|bsd/ then '/usr/local/bin/gs'
+                when /mswin|mingw/ then 'C:\\gs\\bin\\gswin32\\gswin32c.exe'
+                else ''
+              end
+    not_found_msg="\nGhostscript not found in your system environment (#{RbConfig::CONFIG['host_os']}).\nInstall it and set the variable RGhost::Config::GS[:path] with the executable.\nExample: RGhost::Config::GS[:path]='/path/to/my/gs' #unix-style\n RGhost::Config::GS[:path]=\"C:\\\\gs\\\\bin\\\\gswin32c.exe\"  #windows-style\n"
     raise not_found_msg unless (File.exists? GS[:path])
   end
 
