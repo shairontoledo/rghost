@@ -70,15 +70,8 @@ module RGhost::Config
     :default_params=> %w(gs -dNOPAUSE -dBATCH -dQUIET -dNOPAGEPROMPT),
     :stack_elements => 5000,
     :font_encoding => :IsoLatin,
-    :charset_convert => begin
-      if RUBY_VERSION =~ /^1.8/
-        require 'iconv'
-        lambda { |text| Iconv::iconv('latin1','utf-8', text).join }
-      else
-        lambda { |text| text.encode('ISO-8859-1', 'UTF-8') }
-      end
-    end,
-    :external_encoding => nil,
+    :external_encoding => 'ascii-8bit',
+    :charset_convert => nil,
     :fontsize => 8,
     :unit => RGhost::Units::Cm
   }
@@ -120,10 +113,28 @@ module RGhost::Config
     d.benchmark(:stop)
     d.done
     d
-
-
-
   end
+
+  #Generate the UTF-8 encoding mapping
+  #
+  # RGhost::Config.utf8_encodings.render :pdf, :filename => "/tmp/encoding_map.pdf"
+  #
+  def self.utf8_encodings
+    doc = RGhost::Document.new :paper => [20,10], :margin_left => 2.3, :margin_bottom => 2.3
+
+    doc.virtual_pages do
+      7.times do 
+        new_page :width => 2, :margin_left => 1
+      end  
+    end
+
+    RGhost::RubyToPs::UTF8_ENCODINGS.each do |k,v|
+      doc.show "#{k} = #{v}"
+      doc.next_row
+    end
+    doc
+  end
+
   #This method is a helper to gets the best encoding.
   #
   #link:images/encode_test.png

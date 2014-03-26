@@ -1,3 +1,4 @@
+# encoding: utf-8
 #Converts Ruby types to Postscript types
 module RGhost::RubyToPs
 
