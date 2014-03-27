@@ -138,7 +138,7 @@ module RGhost::Constants
     DEVICES_ALIAS={
       :eps	=> :epswrite,
       :pdf	=> :pdfwrite,
-      :ps		=> :pswrite,
+      :ps		=> :ps2write,
       :pcl	=> :pxlmono,
       :tif	=> :tiffcrle,
       :tiff	=> :tiffcrle,
