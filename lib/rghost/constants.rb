@@ -3,7 +3,7 @@ require "rghost/helpers"
 module RGhost::Constants
   module HashKeyMethod #:nodoc:
     def method_missing(method, *args)
-      self[method.to_sym]   
+      self[method.to_sym]
     end
   end
   class HashKeyMethodClass < Hash #:nodoc:
@@ -11,7 +11,7 @@ module RGhost::Constants
   end
   module Devices
     #Standard Devices
-    STANDARD=RGhost::Constants::HashKeyMethodClass[	
+    STANDARD=RGhost::Constants::HashKeyMethodClass[
       #-- MS-DOS displays",
       :ega => "EGA (640x350, 16-color)",
       :vga => "VGA (640x480, 16-color)",
@@ -76,7 +76,7 @@ module RGhost::Constants
       :tiffg32d => "TIFF Group 3 2-D fax",
       :tiffg4 => "TIFF Group 4 fax",
       #-- High-level (vector) file formats",
-      :epswrite => "EPS output (like PostScript Distillery)",
+      :eps2write => "EPS output (like PostScript Distillery)",
       :pdfwrite => "PDF output (like Adobe Acrobat Distiller)",
       :pswrite => "PostScript output (like PostScript Distillery)",
       :pxlmono => "Black-and-white PCL XL",
@@ -132,11 +132,11 @@ module RGhost::Constants
       :tiff24nc => "TIFF 24-bit RGB, no compression (NeXT standard format)",
       :tifflzw => "TIFF LZW (tag = 5) (monochrome)",
       :tiffpack => "TIFF PackBits (tag = 32773) (monochrome)"
-  	
-  		
+
+
     ]
     DEVICES_ALIAS={
-      :eps	=> :epswrite,
+      :eps	=> :eps2write,
       :pdf	=> :pdfwrite,
       :ps		=> :ps2write,
       :pcl	=> :pxlmono,
@@ -147,15 +147,15 @@ module RGhost::Constants
     }
     #Load device by alias
     def device_for(dev)
-     
-       
+
+
       return DEVICES_ALIAS[dev] if DEVICES_ALIAS.key? dev
       return dev if STANDARD.key? dev
       raise "Undefined device: #{dev}"
     end
-  	
+
   end
-  
+
   module Fonts
     #Standard Encodings
     ENCODINGS=['ISOLatin1Encoding', 'StandardEncoding ']
@@ -261,7 +261,7 @@ module RGhost::Constants
       'ZapfDingbats' => "-itc-zapfdingbats-medium-r-normal--",
       'Symbol' => "--symbol-medium-r-normal--"
     }
-  
+
   end
   #Color map
   module Colors
@@ -564,7 +564,7 @@ module RGhost::Constants
       :Yellow => [0.0,0.0,1.0,0.0],
       :YellowGreen => [0.248780487804878,0.0,0.75609756097561,0.196078431372549]
     ]
-    
+
   end
   #Standard papers
   module Papers
@@ -619,8 +619,8 @@ module RGhost::Constants
       :flse       =>  [612,936],
       :halfletter =>  [396,612]
     }
-  
+
   end
 end
 
- 
+
