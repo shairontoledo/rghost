@@ -65,8 +65,6 @@ module RGhost::Constants
       :lj5gray => "H-P LaserJet 5 & 6 family, gray-scale bitmap;",
       :lp2563 => "H-P 2563B line printer",
       :oce9050 => "OCE 9050 printe",
-      :pxlmono => "H-P black-and-white PCL XL printers (LaserJet 5 and 6 family)",
-      :pxlcolor => "H-P color PCL XL printers (e.g. Color LaserJet 4500)",
       #-- Fax file format",
       :faxg3 => "Group 3 fax, with EOLs but no header or EOD",
       :faxg32d => "Group 3 2-D fax, with EOLs but no header or EOD",
