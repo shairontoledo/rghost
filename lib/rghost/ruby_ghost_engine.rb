@@ -159,7 +159,7 @@ class RGhost::Engine
 
     # Process as a single byte sequence because not all shell
     # implementations are multibyte aware.
-    str.gsub!(/([^A-Za-z0-9_\-.,:\/@\n])/n, "\\\\\\1")
+    str.gsub!(/([^A-Za-z0-9_\-.,:\/@%\n])/n, "\\\\\\1")
 
     # A LF cannot be escaped with a backslash because a backslash + LF
     # combo is regarded as line continuation and simply ignored.
