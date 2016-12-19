@@ -256,6 +256,9 @@ class RGhost::Document < RGhost::PsFacade
   # printer.close
   def render_stream(device,options={})
     rg=render(device,options)
+
+    raise "Error rendering: #{rg.errors}" if rg.errors
+
     out=rg.output.readlines.join
     rg.clear_output
     out
