@@ -67,6 +67,8 @@ class RGhost::Engine
       #@delete_input=false unless @options[:debug]
     when String
       file_in=@document
+    else
+      raise RuntimeError.new("Cannot convert #{@document.class}. Supported classes are RGhost::Document or File or String.")
     end
 
     params << shellescape(file_in)

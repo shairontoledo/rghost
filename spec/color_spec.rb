@@ -143,7 +143,7 @@ describe RGhost::Color do
     
     it "should create a color from a hex(html style)" do
       c = RGhost::RGB.new "#ABBACA"
-      c.ps.to_s.should == "0.670588235294118 0.729411764705882 0.792156862745098 setrgbcolor"
+      c.ps.to_s.should == "0.6705882352941176 0.7294117647058823 0.792156862745098 setrgbcolor"
       
       c = RGhost::RGB.new "#FFFFFF"
       c.ps.to_s.should == "1.0 1.0 1.0 setrgbcolor"
@@ -158,7 +158,7 @@ describe RGhost::Color do
       c.ps.to_s.should == "1.0 1.0 0.0 setrgbcolor"
       
       c = RGhost::RGB.new "#334455"
-      c.ps.to_s.should == "0.2 0.266666666666667 0.333333333333333 setrgbcolor"
+      c.ps.to_s.should == "0.2 0.26666666666666666 0.3333333333333333 setrgbcolor"
       
     end
 
