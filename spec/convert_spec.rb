@@ -45,6 +45,10 @@ describe RGhost::Convert do
     File.size(file).should_not be(0)
     
   end
+
+  it "should raise exception when initialize with not supported file" do
+    expect{ RGhost::Convert.new(nil).to :jpeg }.to raise_error(/NilClass/)
+  end
   
   
 
