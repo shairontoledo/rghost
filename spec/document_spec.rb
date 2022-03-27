@@ -6,7 +6,7 @@ describe RGhost::Document do
     
     doc = RGhost::Document.new
     r = doc.render :pdf, :filename => RGhost.using_temp_dir("testdoc.pdf")
-    File.exists?(r.output).should be true
+    File.exist?(r.output).should be true
     
   end
 

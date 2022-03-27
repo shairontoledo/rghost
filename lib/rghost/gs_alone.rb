@@ -8,8 +8,8 @@ class RGhost::GSAlone #:nodoc:
   
   def run
     cmd=@params.join(" ")
-    #puts File.exists?(RGhost::Config::GS[:path].to_s)
-    unless File.exists?(RGhost::Config::GS[:path].to_s)
+    #puts File.exist?(RGhost::Config::GS[:path].to_s)
+    unless File.exist?(RGhost::Config::GS[:path].to_s)
       RGhost::Config.config_platform
     end
     r=system(RGhost::Config::GS[:path]+cmd)

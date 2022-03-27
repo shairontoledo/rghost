@@ -85,7 +85,7 @@ module RGhost::Config
                 else ''
               end
     not_found_msg="\nGhostscript not found in your system environment (#{RbConfig::CONFIG['host_os']}).\nInstall it and set the variable RGhost::Config::GS[:path] with the executable.\nExample: RGhost::Config::GS[:path]='/path/to/my/gs' #unix-style\n RGhost::Config::GS[:path]=\"C:\\\\gs\\\\bin\\\\gswin32c.exe\"  #windows-style\n"
-    raise not_found_msg unless (File.exists? GS[:path])
+    raise not_found_msg unless (File.exist? GS[:path])
   end
 
   #Test if your environment is ready to works. If yes the page below will show.

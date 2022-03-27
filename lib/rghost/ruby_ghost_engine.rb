@@ -84,7 +84,7 @@ class RGhost::Engine
     end
 
     if @error # if error
-      @errors=File.open(file_err).readlines if File.exists?(file_err)
+      @errors=File.open(file_err).readlines if File.exist?(file_err)
       raise RGhost::RenderException.new(@errors.join(" ")) if RGhost::Config::GS[:raise_on_error]
     else
       if multipage
