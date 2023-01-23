@@ -10,7 +10,7 @@ describe RGhost::Convert do
   it "should convert a pdf to jpeg" do
     
     resp = RGhost::Convert.new(@a_pdf).to :jpeg, :filename => RGhost.using_temp_dir("a_file.jpg")
-    File.exists?(resp).should == true
+    File.exist?(resp).should == true
     File.size(resp).should_not be(0)
     
   end
@@ -19,7 +19,7 @@ describe RGhost::Convert do
     
     resp = RGhost::Convert.new(@a_pdf).to :tiff, :filename => RGhost.using_temp_dir("a_file.tif")
     
-    File.exists?(resp).should == true
+    File.exist?(resp).should == true
     File.size(resp).should_not be(0)
     
   end
@@ -30,7 +30,7 @@ describe RGhost::Convert do
     pages.size.should == 2
     pages.each_with_index do |file,idx|
       file.should =~ /a_file_000#{idx+1}.jpg$/
-      File.exists?(file).should == true
+      File.exist?(file).should == true
       File.size(file).should_not be(0)
     end
   end
@@ -41,7 +41,7 @@ describe RGhost::Convert do
     
     file = pages.first
     file.should =~ /a_file_0001.jpg$/
-    File.exists?(file).should == true
+    File.exist?(file).should == true
     File.size(file).should_not be(0)
     
   end
