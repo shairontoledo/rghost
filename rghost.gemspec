@@ -132,7 +132,6 @@ Gem::Specification.new do |s|
     "lib/rghost/rectangle_link.rb",
     "lib/rghost/ruby_ghost_config.rb",
     "lib/rghost/ruby_ghost_engine.rb",
-    "lib/rghost/ruby_ghost_version.rb",
     "lib/rghost/ruby_to_ps.rb",
     "lib/rghost/scale.rb",
     "lib/rghost/shape_content.rb",
