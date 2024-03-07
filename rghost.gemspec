@@ -1,7 +1,7 @@
 # shairon.toledo@gmail.com
 # 14 de Dezembro de 2007
 
-require_relative "lib/rghost/version"
+require_relative "lib/rghost/ruby_ghost_version"
 
 Gem::Specification.new do |s|
   s.name = "rghost"
