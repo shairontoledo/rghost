@@ -1,8 +1,8 @@
-module RGhost::VERSION #:nodoc:
+module RGhost
+  module VERSION # :nodoc:
     MAJOR = 0
-    MINOR = 8
-    TINY  = 7
-    DATE=1244286414
-    STRING = [MAJOR, MINOR, TINY].join('.')
-  
+    MINOR = 9
+    TINY = 8
+    STRING = [MAJOR, MINOR, TINY].join(".")
+  end
 end
