@@ -143,6 +143,7 @@ Gem::Specification.new do |s|
     "lib/rghost/textarea.rb",
     "lib/rghost/units.rb",
     "lib/rghost/variable.rb",
+    "lib/rghost/version.rb",
     "lib/rghost/vertical_line.rb",
     "lib/rghost/virtual_pages.rb",
     "lib/rghost.rb"
