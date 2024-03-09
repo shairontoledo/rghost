@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.email = "shairon.toledo@gmail.com"
   s.homepage = "https://github.com/shairontoledo/rghost"
   s.platform = Gem::Platform::RUBY
+  s.licenses = ["MIT"]
   s.summary = "Ruby Ghostscript Engine is a document creation and conversion API, supporting PDF, PS, GIF, TIF, PNG, JPG…"
   s.description = "#{s.summary} It uses the GhostScript framework for format conversion, utilizes EPS templates, and is optimized to work with larger documents."
 
