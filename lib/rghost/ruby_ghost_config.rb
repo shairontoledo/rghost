@@ -108,8 +108,7 @@ module RGhost
       d.text_in x: 6, y: 15, write: "Yes!", with: :bigger
       d.text_in x: 10, y: 14, write: "Your environment is ready!"
       d.text_in x: 10, y: 13, write: "RGhost Version " + RGhost::VERSION::STRING
-      d.text_in x: 10, y: 12, write: "Created at " + Time.at(RGhost::VERSION::DATE).to_s
-      d.text_in x: 10, y: 11, write: "Now " + Time.now.to_s
+      d.text_in x: 10, y: 12, write: "Now " + Time.now.to_s
 
       d.benchmark(:stop)
       d.done
