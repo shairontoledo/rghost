@@ -13,4 +13,3 @@ require 'rghost/ps_facade'
 require 'rghost/function'
 require 'rghost/document'
 require 'rghost/grid/grid'
-RGhost::Config::GS[:PATH]="/opt/local/bin/gs"
