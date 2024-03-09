@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Dash do
+RSpec.describe RGhost::Dash do
   it "should set dash values" do
     options = RGhost::Dash::DEFAULT_OPTIONS
     dash = RGhost::Dash.new

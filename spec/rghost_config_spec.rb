@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe RGhost::Config do
+RSpec.describe RGhost::Config do
   subject(:config) { described_class }
   let(:fake_which) { class_double("RGhost::Which", call: :ok) }
   let(:options) { {} }

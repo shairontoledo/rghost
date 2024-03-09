@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Callback do
+RSpec.describe RGhost::Callback do
   it "should create a callback block" do
     b = RGhost::Callback.new "a_test_callback" do
     end

@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
 require "fileutils"
-describe RGhost::Convert do
+
+RSpec.describe RGhost::Convert do
   before :all do
     @a_pdf = RGhost.asser_path("doc.pdf")
     @multi_page = RGhost.asser_path("doc2.pdf")

@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Cursor do
+RSpec.describe RGhost::Cursor do
   it "should go to a row" do
     expect(RGhost::Cursor.goto_row(10).ps.strip).to eq("10 goto_row  default_point")
     expect(RGhost::Cursor.goto_row(20).ps.strip).to eq("20 goto_row  default_point")

@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Document do
+RSpec.describe RGhost::Document do
   it "should to use default options when user doesn't use any" do
     doc = RGhost::Document.new
     r = doc.render :pdf, filename: RGhost.using_temp_dir("testdoc.pdf")

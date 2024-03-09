@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Circle do
+RSpec.describe RGhost::Circle do
   it "should use default options when user doesn't use any" do
     ps_string = RGhost::Circle.new.ps.to_s
     options = RGhost::Circle::DEFAULT_OPTIONS

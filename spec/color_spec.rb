@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Color do
+RSpec.describe RGhost::Color do
   context "color factory" do
     # String HTML color converter
     # Color.create '#FFAA33'

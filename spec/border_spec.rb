@@ -1,6 +1,6 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+# frozen_string_literal: true
 
-describe RGhost::Border do
+RSpec.describe RGhost::Border do
   it "should to use default options when user doesn't use any" do
     ps_string = RGhost::Border.new.ps.to_s
     options = RGhost::Border::DEFAULT_OPTIONS
