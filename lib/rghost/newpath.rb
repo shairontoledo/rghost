@@ -3,17 +3,13 @@ require "rghost/cursor"
 require "rghost/point"
 require "rghost/line_width"
 
-#Initializes the current path to be empty, causing the current point to become undefined. 
+# Initializes the current path to be empty, causing the current point to become undefined.
 class RGhost::NewPath < RGhost::PsObject
- 
-  def initialize(&block)
-    @body=RGhost::PsFacade.new(&block)
-    
+  def initialize(&)
+    @body = RGhost::PsFacade.new(&)
   end
-  
+
   def ps
-      "newpath #{@body} closepath"
+    "newpath #{@body} closepath"
   end
-  
-  
 end

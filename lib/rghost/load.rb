@@ -1,13 +1,12 @@
 require "rghost/ps_object"
 module RGhost::Load
-  #Loads library
-  def self.library(name, type=:ps)
-    #PsObject.new File.open(File.dirname(__FILE__)+File::SEPARATOR+type.to_s+File::SEPARATOR+name.to_s+"."+type.to_s).readlines.join("")
-    
-   RGhost::PsObject.new("(#{name.to_s}.#{type}) runlibfile\n")
-      
+  # Loads library
+  def self.library(name, type = :ps)
+    # PsObject.new File.open(File.dirname(__FILE__)+File::SEPARATOR+type.to_s+File::SEPARATOR+name.to_s+"."+type.to_s).readlines.join("")
+
+    RGhost::PsObject.new("(#{name}.#{type}) runlibfile\n")
   end
-  
+
   def self.rg_enviroment
     RGhost::PsObject.new do
       raw RGhost::Load.library(:basic)
@@ -28,16 +27,11 @@ module RGhost::Load
       raw RGhost::Load.library(:frame)
       raw RGhost::Load.library(:link)
       raw RGhost::Load.library(:rect_link)
-      
     end
   end
-  #Loads binary library
+
+  # Loads binary library
   def self.binary(path)
-      File.open(path).readlines.join
-  
+    File.open(path).readlines.join
   end
-  
-
-  
 end
-

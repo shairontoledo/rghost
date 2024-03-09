@@ -160,7 +160,7 @@ module RGhost
 
       Dir.glob(exp).sort.each do |f|
         name = File.basename(f)
-        name.gsub!(/\.enc/, "")
+        name.gsub!(".enc", "")
         d.set RGhost::Load.library(name, :enc)
         d.set RGhost::Variable.new(:default_encoding, name)
         d.set RGhost::FontMap.new {

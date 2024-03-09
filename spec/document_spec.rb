@@ -1,72 +1,52 @@
-require File.expand_path(File.join(File.dirname(__FILE__),'spec_helper'))
+require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
 
 describe RGhost::Document do
-
   it "should to use default options when user doesn't use any" do
-    
     doc = RGhost::Document.new
-    r = doc.render :pdf, :filename => RGhost.using_temp_dir("testdoc.pdf")
-    File.exist?(r.output).should be true
-    
+    r = doc.render :pdf, filename: RGhost.using_temp_dir("testdoc.pdf")
+    expect(File.exist?(r.output)).to be true
   end
 
   it "should create a new document with empty body" do
-    
     doc = RGhost::Document.new
-    doc.body.strip.should == ""
-    
+    expect(doc.body.strip).to eq("")
   end
-  
-  it "should create a new document using A4 portrait" do
-    
-    doc = RGhost::Document.new
-    doc.paper.paper.should == :A4
-    doc.paper.landscape.should == false
-    
 
+  it "should create a new document using A4 portrait" do
+    doc = RGhost::Document.new
+    expect(doc.paper.paper).to eq(:A4)
+    expect(doc.paper.landscape).to eq(false)
   end
 
   it "should create a new document using A4 landscape" do
-    
-    doc = RGhost::Document.new :landscape => true
-    doc.paper.paper.should == :A4
-    doc.paper.landscape.should == true
-
+    doc = RGhost::Document.new landscape: true
+    expect(doc.paper.paper).to eq(:A4)
+    expect(doc.paper.landscape).to eq(true)
   end
 
   it "should create a new document using custom paper" do
-    
-    doc = RGhost::Document.new :landscape => true, :paper => [10,20]
-    doc.paper.paper.should == [20,10]
-
+    doc = RGhost::Document.new landscape: true, paper: [10, 20]
+    expect(doc.paper.paper).to eq([20, 10])
   end
 
   it "should get gs paper definitions" do
-    
-    doc = RGhost::Document.new :paper => [10,20]
-    doc.gs_paper.should == ["-dDEVICEWIDTHPOINTS=282", "-dDEVICEHEIGHTPOINTS=565"]
-
+    doc = RGhost::Document.new paper: [10, 20]
+    expect(doc.gs_paper).to eq(["-dDEVICEWIDTHPOINTS=282", "-dDEVICEHEIGHTPOINTS=565"])
   end
 
   it "should define :rows_per_page" do
-    
-    doc = RGhost::Document.new :rows_per_page  => 40
+    doc = RGhost::Document.new rows_per_page: 40
     doc.variables[:row_padding] == 40
-
   end
-  
-  it "should define :row_height" do
-    
-    doc = RGhost::Document.new :row_height  => 2
-    doc.variables[:row_height] == 2
 
+  it "should define :row_height" do
+    doc = RGhost::Document.new row_height: 2
+    doc.variables[:row_height] == 2
   end
 
   it "should define :row_padding" do
-    
-    doc = RGhost::Document.new :row_padding  => 1.5
+    doc = RGhost::Document.new row_padding: 1.5
     doc.variables[:row_padding] == 1.5
-
   end
 
   it "should define essential libs" do
@@ -88,41 +68,39 @@ describe RGhost::Document do
       "text.ps",
       "frame.ps",
       "link.ps",
-      "rect_link.ps"]
-    
-    doc = RGhost::Document.new 
-    
+      "rect_link.ps"
+    ]
+
+    doc = RGhost::Document.new
+
     ps = doc.ps
     libs.each do |libname|
-      ps.should include(libname)
+      expect(ps).to include(libname)
+    end
+  end
+
+  it "should define tags" do
+    doc = RGhost::Document.new
+    doc.define_tags do
+      tag :my_test_tag, name: "Helvetica"
+      tag :xxx_test_tag, name: "Helvetica"
     end
 
+    expect(doc.ps).to match "/_xxx_test_tag"
   end
-  
-  it "should define tags" do
-    
-    doc = RGhost::Document.new 
-    doc.define_tags do 
-      tag :my_test_tag, :name => "Helvetica"
-      tag :xxx_test_tag, :name => "Helvetica"
-    end
-    
-    doc.ps.should match "/_xxx_test_tag"
-    
-  end
-  
+
   it "should define functions" do
-    doc = RGhost::Document.new 
+    doc = RGhost::Document.new
     doc.define :testing_function do |f1|
       f1.set RGhost::PsObject.new("foobar")
-      
     end
-    
-    doc.ps.should include("/_testing_function{
- foobar  
-}")
-    
-  end
-  
 
+    func_def = <<~FUNC.strip
+      /_testing_function{
+       foobar  
+      }
+    FUNC
+
+    expect(doc.ps).to include(func_def)
+  end
 end

@@ -1,4 +1,4 @@
-$LOAD_PATH << File.dirname(__FILE__)+File::SEPARATOR+"../"
+$LOAD_PATH << File.dirname(__FILE__) + File::SEPARATOR + "../"
 require "rghost/ps_object"
 require "rghost/ruby_to_ps"
 require "rghost/variable"
@@ -20,101 +20,86 @@ require "rghost/callback"
 class RGhost::Grid::Header < RGhost::PsObject
   include RGhost::RubyToPs
 
-  DEFAULT_OPTIONS={:width => 4, :align => :center, :title_align => nil, :header_width => nil, :format => :string}
+  DEFAULT_OPTIONS = {width: 4, align: :center, title_align: nil, header_width: nil, format: :string}
   attr_reader :data_types, :titles, :size
 
-  def initialize(headings=true,options={},&block) #:nodoc:
-    @header=RGhost::PsObject.new
-    @data_types=[]
-    @options=[]
-    @titles=[]
-    @header.set RGhost::Variable.new(:new_page?,true)  
-    @default_options=DEFAULT_OPTIONS.merge(options)
-    @header.set RGhost::Variable.new(:headings?,headings)
-    @size=0
+  def initialize(headings = true, options = {}, &block) # :nodoc:
+    @header = RGhost::PsObject.new
+    @data_types = []
+    @options = []
+    @titles = []
+    @header.set RGhost::Variable.new(:new_page?, true)
+    @default_options = DEFAULT_OPTIONS.merge(options)
+    @header.set RGhost::Variable.new(:headings?, headings)
+    @size = 0
     instance_eval(&block) if block
-
   end
 
   def ps
-    
-    p,h=format_header
-    @header.set RGhost::Variable.new(:header_titles,to_array(@titles))
-    @header.set RGhost::Variable.new(:table_params," [\n #{p}] \n")
-    @header.set RGhost::Variable.new(:table_header," [\n #{h}] \n")
-
+    p, h = format_header
+    @header.set RGhost::Variable.new(:header_titles, to_array(@titles))
+    @header.set RGhost::Variable.new(:table_params, " [\n #{p}] \n")
+    @header.set RGhost::Variable.new(:table_header, " [\n #{h}] \n")
 
     @header
   end
 
-  def col(name="", options={}) #:nodoc:
-    
-    opts=@default_options.merge(options)
-    @size+=opts[:width]
+  def col(name = "", options = {}) # :nodoc:
+    opts = @default_options.merge(options)
+    @size += opts[:width]
     @data_types << opts[:format]
     @options << opts
-    @titles <<  ps_escape(name.to_s)
-
+    @titles << ps_escape(name.to_s)
   end
 
-  def default_options(opts) #:nodoc:
+  def default_options(opts) # :nodoc:
     @default_options.merge!(opts)
-
   end
 
-  def column(name,options={}) #:nodoc:
-    col(name,options)
+  def column(name, options = {}) # :nodoc:
+    col(name, options)
   end
 
-  def next_column(name,options={}) #:nodoc:
-    col(name,options)
+  def next_column(name, options = {}) # :nodoc:
+    col(name, options)
   end
 
-  def before_create(&block)
-    #@header.set RGhost::Function.new(:before_header_create, &block )
-    new_static_callback(:before_header_create,&block)
+  def before_create(&)
+    # @header.set RGhost::Function.new(:before_header_create, &block )
+    new_static_callback(:before_header_create, &)
   end
 
-
-  def after_create(&block)
-    #@header.set RGhost::Function.new(:after_header_create, &block )
-    new_static_callback(:after_header_create,&block)
+  def after_create(&)
+    # @header.set RGhost::Function.new(:after_header_create, &block )
+    new_static_callback(:after_header_create, &)
   end
 
-  def before_column(options={},&block)
-    @header.set RGhost::Callback.new(:before_column_header, options,&block)
-
+  def before_column(options = {}, &)
+    @header.set RGhost::Callback.new(:before_column_header, options, &)
   end
 
-  def after_column(options={},&block)
-    @header.set RGhost::Callback.new(:after_column_header,options,&block)
-
+  def after_column(options = {}, &)
+    @header.set RGhost::Callback.new(:after_column_header, options, &)
   end
 
   private
-  def new_static_callback(name,&block)
 
-    callback_body= RGhost::PsFacade.new(&block)
-    @header.set RGhost::Function.new(name,callback_body)
+  def new_static_callback(name, &)
+    callback_body = RGhost::PsFacade.new(&)
+    @header.set RGhost::Function.new(name, callback_body)
   end
+
   def format_header
-    p='' #params
-    h='' #params_head
-    o=@options.dup
+    p = "" # params
+    h = "" # params_head
+    o = @options.dup
     o.each do |v|
-      v[:title_align]||=v[:align]
-      v[:header_width]||=v[:width]
-      p << "[ #{RGhost::Units::parse(v[:width])} /st_#{v[:align]}]\n "
-      h << "[ #{RGhost::Units::parse(v[:header_width])} /st_#{v[:title_align]}]\n "
+      v[:title_align] ||= v[:align]
+      v[:header_width] ||= v[:width]
+      p << "[ #{RGhost::Units.parse(v[:width])} /st_#{v[:align]}]\n "
+      h << "[ #{RGhost::Units.parse(v[:header_width])} /st_#{v[:title_align]}]\n "
     end
 
-    return p,h
-
+    [p, h]
   end
-
-
 end
-
-
-
-

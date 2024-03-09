@@ -1,4 +1,4 @@
-require 'rghost/ps_object'
+require "rghost/ps_object"
 #
 # Grid::Rails mapps grid columns to ActiveRecord attributes. For
 # example, let's take a Calls class to represent telephone calls.
@@ -40,35 +40,33 @@ require 'rghost/ps_object'
 # Or a String
 #   g.column 'accounts.first.login', :title => Login"
 class RGhost::Grid::Rails < RGhost::Grid::Base
-  #The parameter +_data+ is an Array of ActiveRecord::Base objects.
+  # The parameter +_data+ is an Array of ActiveRecord::Base objects.
   def data(_data)
     _data.collect do |d|
-      line=@rails_cols.collect do |c|
+      line = @rails_cols.collect do |c|
         case c[:field_name]
-          when Symbol
-            d[c[:field_name]]
-          when String
-            d.instance_eval c[:field_name]
-          when Proc
-            d.instance_eval(&c[:field_name])
+        when Symbol
+          d[c[:field_name]]
+        when String
+          d.instance_eval c[:field_name]
+        when Proc
+          d.instance_eval(&c[:field_name])
         end
       end
       proc_line(line)
     end
   end
 
-  def col(field_name, options={}) #:nodoc:
-    super(options[:title],options)
-     
-    @rails_cols||=[]
-    owf=options.dup #from options with field
-    owf[:field_name]||=field_name
+  def col(field_name, options = {}) # :nodoc:
+    super(options[:title], options)
+
+    @rails_cols ||= []
+    owf = options.dup # from options with field
+    owf[:field_name] ||= field_name
     @rails_cols << owf
-
   end
 
-  def column(field_name, options={}) #:nodoc:
-    col(field_name,options)
+  def column(field_name, options = {}) # :nodoc:
+    col(field_name, options)
   end
-
 end

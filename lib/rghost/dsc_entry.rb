@@ -1,5 +1,5 @@
 require "rghost/ps_object"
-#Specifiesnew  DSC (Document Structuring Conventions)
+# Specifiesnew  DSC (Document Structuring Conventions)
 class RGhost::DSCEntry < RGhost::PsObject
   #===Example
   #   DSCEntry.new do |entry|
@@ -8,13 +8,10 @@ class RGhost::DSCEntry < RGhost::PsObject
   #     entry << "BeginSetup"
   #   end
   def initialize
-		
-    yield @entries=[]
+    yield @entries = []
   end
 
   def ps
-    @entries.map{|e| "%%#{e}\n"}.to_s
-
+    @entries.map { |e| "%%#{e}\n" }.to_s
   end
-	
 end

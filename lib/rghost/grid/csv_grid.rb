@@ -1,4 +1,3 @@
-
 # Grid::CSV allows you to import data from a csv file.
 
 # ===Example
@@ -22,20 +21,20 @@ class RGhost::Grid::CSV < RGhost::Grid::Base
   # You can use a regular expression for record separator:
   #  grid.data("/mydir/myfile.csv", /[^\w]/)
 
-  def data(filepath,col_sep=';')
-    _data=filepath
-    first=true
-    _data=File.open(_data) if _data.is_a? String
+  def data(filepath, col_sep = ";")
+    _data = filepath
+    first = true
+    _data = File.open(_data) if _data.is_a? String
     _data.each do |line|
-      l=line.split(Regexp.new(col_sep)) if col_sep.is_a?(String)
-      l=line.split(col_sep) if col_sep.is_a?(Regexp)
+      l = line.split(Regexp.new(col_sep)) if col_sep.is_a?(String)
+      l = line.split(col_sep) if col_sep.is_a?(Regexp)
       if first
-        v=l.size-@header.titles.size
-        #v.times{@header.titles << "tt"}
-        #l.each {|h| col(h)} if @header.titles.size == 0
-        l.each {|h| col("")} if @header.titles.size == 0
+        v = l.size - @header.titles.size
+        # v.times{@header.titles << "tt"}
+        # l.each {|h| col(h)} if @header.titles.size == 0
+        l.each { |h| col("") } if @header.titles.size == 0
         proc_line(l)
-        first=false
+        first = false
 
         next
       else
@@ -43,9 +42,5 @@ class RGhost::Grid::CSV < RGhost::Grid::Base
         proc_line(l)
       end
     end
-
   end
-
-
-
 end

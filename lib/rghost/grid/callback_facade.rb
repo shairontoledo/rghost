@@ -1,4 +1,3 @@
-
 module RGhost::Grid
   # The callbacks for the grid are defined here. Let's see them in action.
   # ===Grid::CallbackFacade examples
@@ -76,61 +75,57 @@ module RGhost::Grid
   #  doc=Document.new
   #  doc.set grid
   module CallbackFacade
-
     # Executes before processing row. Responds to :only and :except
     # options.
-    def before_row(options={},&block)
-      new_dynamic_callback(:before_row,options,&block)
+    def before_row(options = {}, &)
+      new_dynamic_callback(:before_row, options, &)
     end
 
     # Executes on creating an odd rows. Responds to :only and :except
     # options.
-    def odd_row(options={},&block)
-      new_dynamic_callback(:odd_row,options,&block)
+    def odd_row(options = {}, &)
+      new_dynamic_callback(:odd_row, options, &)
     end
 
     # Executes upon creating even rows. Responds to :only and :except
     # options.
-    def even_row(options={},&block)
-      new_dynamic_callback(:even_row,options,&block)
+    def even_row(options = {}, &)
+      new_dynamic_callback(:even_row, options, &)
     end
 
     # Executes before creating a column. Responds to :only and :except
     # options.
-    def before_column(options={},&block)
-      new_dynamic_callback(:before_column,options,&block)
+    def before_column(options = {}, &)
+      new_dynamic_callback(:before_column, options, &)
     end
 
     # Executes after a column was created. Responds to :only and
     # :except options.
-    def after_column(options={},&block)
-      new_dynamic_callback(:after_column,options,&block)
+    def after_column(options = {}, &)
+      new_dynamic_callback(:after_column, options, &)
     end
 
     # Executes when creating an odd column. Responds to :only and
     # :except options.
-    def odd_column(options={},&block)
-      new_dynamic_callback(:odd_column,options,&block)
+    def odd_column(options = {}, &)
+      new_dynamic_callback(:odd_column, options, &)
     end
 
     # Executes upon creating an even column. Responds to :only and
     # :except options.
-    def even_column(options={},&block)
-      new_dynamic_callback(:even_column,options,&block)
+    def even_column(options = {}, &)
+      new_dynamic_callback(:even_column, options, &)
     end
-
 
     private
 
-    def new_dynamic_callback(name,options={},&block)
-      @callbacks.set RGhost::Callback.new(name,options,&block)
-    end
-    def new_static_callback(name,&block)
-
-      callback_body= RGhost::PsFacade.new(&block)
-      @callbacks.set RGhost::Function.new(name,callback_body)
+    def new_dynamic_callback(name, options = {}, &)
+      @callbacks.set RGhost::Callback.new(name, options, &)
     end
 
-
+    def new_static_callback(name, &)
+      callback_body = RGhost::PsFacade.new(&)
+      @callbacks.set RGhost::Function.new(name, callback_body)
+    end
   end
 end
