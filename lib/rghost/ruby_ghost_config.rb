@@ -1,5 +1,6 @@
 require "rghost/font_map"
 require "rghost/ps_object"
+require "rghost/which"
 
 # Rghost setup with Ghostscript.
 # Ghostscript runs on a variety of platforms, this is why we recommend the non coupled install for non *nix environments.
@@ -52,7 +53,6 @@ require "rghost/ps_object"
 # could help when dealing with encoding conversion errors. Default: nil
 #====Example
 # RGhost::Config::GS[:external_encoding]= 'ascii-8bit'
-#
 module RGhost
   module Config
     DEFAULT_PORTRAIT_TEMPLATE = File.join(File.dirname(__FILE__), "ps", "rghost_default_template.eps")
@@ -75,18 +75,21 @@ module RGhost
       unit: RGhost::Units::Cm
     }
 
-    def self.config_platform #:nodoc:
-      require 'rbconfig'
-      GS[:path]=case RbConfig::CONFIG['host_os']
-                  when /linux/ then '/usr/bin/gs'
-                  when /mac|darwin|freebsd|bsd/ then '/usr/local/bin/gs'
-                  when /mswin|mingw/ then 'C:\\gs\\bin\\gswin32\\gswin32c.exe'
-                  else ''
-                end
-      not_found_msg="\nGhostscript not found in your system environment (#{RbConfig::CONFIG['host_os']}).\nInstall it and set the variable RGhost::Config::GS[:path] with the executable.\nExample: RGhost::Config::GS[:path]='/path/to/my/gs' #unix-style\n RGhost::Config::GS[:path]=\"C:\\\\gs\\\\bin\\\\gswin32c.exe\"  #windows-style\n"
-      raise not_found_msg unless (File.exist? GS[:path])
+    def self.config_platform(which: Which, config_options: GS) # :nodoc:
+      config_options[:path] = which.call("gs")
+
+      raise GS_NOT_FOUND_MSG unless config_options[:path]
     end
-      # Test if your environment is ready to works. If yes the page below will show.
+
+    GS_NOT_FOUND_MSG = <<~MSG
+      Ghostscript not found on your $PATH.
+      Install it and set RGhost::Config::GS[:path] with the path to the executable.
+      Example: RGhost::Config::GS[:path] = '/path/to/my/gs' # unix-style
+               RGhost::Config::GS[:path] = 'C:\\gs\\bin\\gswin32c.exe' # windows-style
+    MSG
+    private_constant :GS_NOT_FOUND_MSG
+
+    # Test if your environment is ready to works. If yes the page below will show.
     #
     # link:images/is_ok.png
     #

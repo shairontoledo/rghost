@@ -1,37 +1,23 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
 describe RGhost::Config do
+  subject(:config) { described_class }
+  let(:fake_which) { class_double("RGhost::Which", call: :ok) }
+  let(:options) { {} }
 
-  it 'should detect linux env properly' do
-    RbConfig::CONFIG.should_receive(:[]).twice.with('host_os').and_return('linux')
-    File.should_receive(:exists?).with('/usr/bin/gs').and_return(true)
-    RGhost::Config.config_platform
-    RGhost::Config::GS[:path].should == '/usr/bin/gs'
+  it "sets GS[:path] when executable is found" do
+    allow(fake_which).to receive(:call).with("gs") { "/some/path/to/gs" }
+
+    config.config_platform(which: fake_which, config_options: options)
+
+    expect(options.fetch(:path)).to eq("/some/path/to/gs")
   end
 
-  it 'should detect windows env properly' do
-    RbConfig::CONFIG.should_receive(:[]).twice.with('host_os').and_return('mswin')
-    File.should_receive(:exists?).with('C:\\gs\\bin\\gswin32\\gswin32c.exe').and_return(true)
-    RGhost::Config.config_platform
-    RGhost::Config::GS[:path].should == 'C:\\gs\\bin\\gswin32\\gswin32c.exe'
-  end
+  it "raises and error when executable cannot be found" do
+    allow(fake_which).to receive(:call).with("gs") { nil }
 
-  it 'should detect other env properly' do
-    RbConfig::CONFIG.should_receive(:[]).twice.with('host_os').and_return('darwin')
-    File.should_receive(:exists?).with('/usr/local/bin/gs').and_return(true)
-    RGhost::Config.config_platform
-    RGhost::Config::GS[:path].should == '/usr/local/bin/gs'
+    expect {
+      config.config_platform(which: fake_which, config_options: options)
+    }.to raise_error(/Ghostscript not found on your \$PATH/)
   end
-
-  it 'should raise error if env is unknown' do
-    RbConfig::CONFIG.should_receive(:[]).twice.with('host_os').and_return('android')
-    expect{RGhost::Config.config_platform}.to raise_error(RuntimeError)
-  end
-
-  it 'should raise error if ghost script is not found' do
-    RbConfig::CONFIG.should_receive(:[]).twice.with('host_os').and_return('linux')
-    File.should_receive(:exists?).with('/usr/bin/gs').and_return(false)
-    expect{RGhost::Config.config_platform}.to raise_error(RuntimeError)
-  end
-
 end
